@@ -20,6 +20,8 @@ recognition.onend = () => {
 
 
 //Oxford
+//https://developer.oxforddictionaries.com/documentation/making-requests-to-the-api
+//https://developer.oxforddictionaries.com/documentation
 /* const id = 	'ef4dc1b4';
 const key = '9dd942bb0687f9ca2b975fa4dfe5ba81';
 const url = `https://od-api.oxforddictionaries.com/api/v2/entries/PT/example`;
