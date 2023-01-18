@@ -1,3 +1,4 @@
+const instrucao = document.querySelector("#instrucao");
 const qtdChances = document.querySelector("#chances");
 const numInicial = document.querySelector("#menor-numero");
 const numFinal = document.querySelector("#maior-numero");
@@ -6,12 +7,36 @@ let numeroSorteado;
 let etapaJogo = 'inicio'
 let erro = false;
 
+const numeros = {
+   'zero': 0,
+   'um': 1,
+   'dois': 2,
+   'três': 3,
+   'quatro': 4,
+   'cinco': 5,
+   'seis': 6,
+   'sete': 7,
+   'oito': 8,
+   'nove': 9,
+   'dez': 10
+}
+
+const corrigeNumeros = (palavra) => {
+   let match = '';
+   for(numero in numeros){
+      if(palavra === numero){
+         match = numeros[numero];   
+      }         
+   }
+   return match;
+}
+
 //Speech recognition
 const SpeechRecognition = window.SpeechRecognition || webkitSpeechRecognition;
-const SpeechGrammarList = window.SpeechGrammarList || webkitSpeechGrammarList;
-const SpeechRecognitionEvent = window.SpeechRecognitionEvent || webkitSpeechRecognitionEvent;
+/* const SpeechGrammarList = window.SpeechGrammarList || webkitSpeechGrammarList;
+const SpeechRecognitionEvent = window.SpeechRecognitionEvent || webkitSpeechRecognitionEvent; */
 const recognition = new SpeechRecognition();
-recognition.lang = 'pt-br';
+recognition.lang = 'pt-Br';
 recognition.continuous = false;
 
 recognition.start();
@@ -20,7 +45,10 @@ recognition.onresult = (e) => {
   const result = e.results[0][0].transcript;
   
   if(etapaJogo === 'inicio' && result ==='entendi'){
-   console.log('começando jogo')
+   instrucao.textContent = 'Diga o primeiro número do seu intervalo de adivinhação';
+   etapaJogo = 'menorNumero';
+  } else if(etapaJogo === 'menorNumero'){
+   numInicial.textContent = result;
   } else if(result ==='reiniciar'){
    console.log("Reiniciando jogo")
   }
