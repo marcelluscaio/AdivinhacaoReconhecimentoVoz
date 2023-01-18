@@ -8,7 +8,9 @@ let etapaJogo = 'inicio'
 let erro = false;
 
 const numeros = {
-   'zero': 0,
+   'zero zero': 0,
+   '00': 0,
+   '01': 1,
    'um': 1,
    'dois': 2,
    'três': 3,
@@ -22,44 +24,53 @@ const numeros = {
 }
 
 const corrigeNumeros = (palavra) => {
-   let match = '';
    for(numero in numeros){
       if(palavra === numero){
-         match = numeros[numero];   
+         palavra = numeros[numero];   
       }         
    }
-   return match;
+   return palavra;
 }
 
 //Speech recognition
-const SpeechRecognition = window.SpeechRecognition || webkitSpeechRecognition;
+window.SpeechRecognition = window.SpeechRecognition || webkitSpeechRecognition;
 /* const SpeechGrammarList = window.SpeechGrammarList || webkitSpeechGrammarList;
-const SpeechRecognitionEvent = window.SpeechRecognitionEvent || webkitSpeechRecognitionEvent; */
+const SpeechRecognitionEvent = window.SpeechRecognitionEvent || webkitSpeechRecognitionEvent;
+recognition.continuous = false;
+ */
 const recognition = new SpeechRecognition();
 recognition.lang = 'pt-Br';
-recognition.continuous = false;
+
 
 recognition.start();
 
 recognition.onresult = (e) => {
   const result = e.results[0][0].transcript;
-  
-  if(etapaJogo === 'inicio' && result ==='entendi'){
-   instrucao.textContent = 'Diga o primeiro número do seu intervalo de adivinhação';
-   etapaJogo = 'menorNumero';
-  } else if(etapaJogo === 'menorNumero'){
-   numInicial.textContent = result;
-  } else if(result ==='reiniciar'){
-   console.log("Reiniciando jogo")
-  }
-  console.log(result);
+
+   if(result ==='reiniciar'){
+      etapaJogo = 'inicio';
+      instrucao.innerText = 'Você vai controlar tudo com a sua voz. Siga com cuidado as instruções. Se algo der errado diga "Reiniciar". Diga "Entendi" para ir para continuar';
+      numInicial.innerText = '?';
+      numFinal.innerText = '?';
+   } else if(etapaJogo === 'inicio' && result ==='entendi'){
+      etapaJogo = 'menorNumero';
+      instrucao.innerText = 'Diga o primeiro número do seu intervalo de adivinhação. Para 0 diga "zero zero" e para 1 dia "zero um"';
+   } else if(etapaJogo === 'menorNumero'){
+      numInicial.innerText = corrigeNumeros(result);
+      etapaJogo = 'maiorNumero';
+      instrucao.innerText = 'Diga o segundo número do seu intervalo de adivinhação';
+   } else if(etapaJogo === 'maiorNumero'){
+      numFinal.innerText = corrigeNumeros(result);
+      etapaJogo = 'confirmar';
+      instrucao.innerText = 'Podemos começar o jogo? Diga "agora" para começar';
+   } else if(etapaJogo === 'confirmar' && result==="agora"){
+      console.log('Começar jogo')
+   }
 }
 
 recognition.onend = () => {
    recognition.start()
 }
-
-
 
 
 
