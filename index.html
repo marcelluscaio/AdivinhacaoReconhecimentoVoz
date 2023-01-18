@@ -1,13 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
    <meta charset="UTF-8">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <link rel="stylesheet" href="dist/output.css">
-   <title>Adivinhe</title>
+   <title>Adivinhe o número</title>
 </head>
-<body class="bg-gray-400">
+<body class="bg-gray-400 flex flex-col justify-center h-screen">
+   <div class="mx-auto w-3/4">
+      <h1>Você consegue adivinhar o número que eu sorteei?</h1>
+      <h2 id="instrucao">Você vai controlar tudo com a sua voz. Siga com cuidado as instruções. Se algo der errado diga "Reiniciar". Diga "Entendi" para ir para continuar</h2>
+      <h2>Chute um número entre <span id="menor-numero">?</span> e <span id="maior-numero">?</span></h2>
+      
+      <div id="chute-container">
+         <span id="chute"></span>
+      </div>
+      <div id="chances"></div>
+      <div id="dica1"></div>
+      <div id="dica2"></div>
+   </div>
 
    <script src="assets/js/main.js"></script>
 </body>

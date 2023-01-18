@@ -1,4 +1,7 @@
+Fazer dois projetos:
+Um será de adivinhação de números bem completo. Usando tailwind
 
+Outro será de adivinhação de palavras, usando tailwind
 
 Fazer sorteador de numeros
 Permitir que o usuario escolha o intervalo
