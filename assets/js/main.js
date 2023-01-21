@@ -20,7 +20,8 @@ const numeros = {
    'sete': 7,
    'oito': 8,
    'nove': 9,
-   'dez': 10
+   'dez': 10,
+   'vinte': 20
 }
 
 const corrigeNumeros = (palavra) => {
@@ -30,6 +31,67 @@ const corrigeNumeros = (palavra) => {
       }         
    }
    return palavra;
+}
+
+const reiniciaJogo = () => {
+   etapaJogo = 'inicio';
+   instrucao.innerText = 'Você vai controlar tudo com a sua voz. Siga com cuidado as instruções. Se algo der errado diga "Reiniciar". Diga "Entendi" para ir para continuar';
+   numInicial.innerText = '?';
+   numFinal.innerText = '?';
+   qtdChances.innerText = '?';
+}
+
+const etapasJogo = [
+   {etapaJogo: 'inicio',
+   condicao: (palavra) => palavra === 'entendi',
+   acao: '',
+   instrucao: 'Diga o primeiro número do seu intervalo de adivinhação. Para 0 diga "zero zero" e para 1 dia "zero um"',
+   proximaEtapa: 'menorNumero'
+   },
+   {etapaJogo: 'menorNumero',
+   condicao: (palavra) => isNumber(palavra),
+   acao: (palavra) => numInicial.innerText = corrigeNumeros(palavra),
+   instrucao: 'Diga o segundo número do seu intervalo de adivinhação',
+   proximaEtapa: 'maiorNumero'
+   },
+   {etapaJogo: 'maiorNumero',
+   condicao: (palavra) => isNumber(palavra),
+   acao: (palavra) => numFinal.innerText = corrigeNumeros(palavra),
+   instrucao: 'Quantas chances para adivinhar você quer?',
+   proximaEtapa: 'chances'
+   },
+   {etapaJogo: 'chances',
+   condicao: (palavra) => isNumber(palavra),
+   acao: (palavra) =>
+         {
+            qtdChancesValor = corrigeNumeros(palavra);
+            qtdChances.innerText = qtdChancesValor;
+         },
+   instrucao: 'Podemos começar o jogo? Diga "agora" para começar',
+   proximaEtapa: 'confirmar'
+   },
+   {etapaJogo: 'confirmar',
+   condicao: (palavra) => palavra === 'agora',
+   acao: '',
+   instrucao: '',
+   proximaEtapa: ''
+   },
+];
+
+function engrenagemJogo(etapaAtual, palavra){
+   if(palavra === "reiniciar"){
+      reiniciaJogo();
+      return
+   }
+   const objetoEtapa = etapasJogo.filter(elemento => elemento.etapaJogo === etapaAtual);
+   console.log(objetoEtapa);
+   if( objetoEtapa[0].condicao(palavra)){
+      if(objetoEtapa[0].acao){
+         objetoEtapa[0].acao(palavra);
+      };
+      instrucao.innerText = objetoEtapa[0].instrucao;
+      etapaJogo = objetoEtapa[0].proximaEtapa;
+   }
 }
 
 //Speech recognition
@@ -45,29 +107,62 @@ recognition.start();
 
 recognition.onresult = (e) => {
   const result = e.results[0][0].transcript;
+  engrenagemJogo(etapaJogo, result);
+
    if(result ==='reiniciar'){
-      etapaJogo = 'inicio';
+     /*  etapaJogo = 'inicio';
       instrucao.innerText = 'Você vai controlar tudo com a sua voz. Siga com cuidado as instruções. Se algo der errado diga "Reiniciar". Diga "Entendi" para ir para continuar';
       numInicial.innerText = '?';
-      numFinal.innerText = '?';
-   } else if(etapaJogo === 'inicio' && result ==='entendi'){
+      numFinal.innerText = '?'; */
+   } /* else if(etapaJogo === 'inicio' && result ==='entendi'){
       etapaJogo = 'menorNumero';
       instrucao.innerText = 'Diga o primeiro número do seu intervalo de adivinhação. Para 0 diga "zero zero" e para 1 dia "zero um"';
-   } else if(etapaJogo === 'menorNumero' && !isNaN(parseInt(corrigeNumeros(result)))){
+   } */ /* else if(etapaJogo === 'menorNumero' && isNumber(result)){
       numInicial.innerText = corrigeNumeros(result);
       etapaJogo = 'maiorNumero';
       instrucao.innerText = 'Diga o segundo número do seu intervalo de adivinhação';
-   } else if(etapaJogo === 'maiorNumero' && !isNaN(parseInt(corrigeNumeros(result)))){
+   } */ /* else if(etapaJogo === 'maiorNumero' && isNumber(result)){
       numFinal.innerText = corrigeNumeros(result);
+      etapaJogo = 'chances';
+      instrucao.innerText = 'Quantas chances para adivinhar você quer?';
+   } *//*  else if(etapaJogo === 'chances' && isNumber(result)){
+      qtdChancesValor = corrigeNumeros(result);
       etapaJogo = 'confirmar';
       instrucao.innerText = 'Podemos começar o jogo? Diga "agora" para começar';
-   } else if(etapaJogo === 'confirmar' && result==="agora"){
+   } */ else if(etapaJogo === 'confirmar' && result==="agora"){
       console.log('Começar jogo')
    }
 }
 
 recognition.onend = () => {
    recognition.start()
+}
+
+function isNumber(value){
+   return !isNaN(parseInt(corrigeNumeros(value)));
+}
+
+function defineRegras(){
+   //validaNumeros();
+/*    if(erro === true){
+      erro = false;
+      return
+   } else{
+   let mensagemErro = document.querySelector("#mensagemErro");
+   mensagemErro.classList.add("escondido");
+   mensagemErro.innerHTML = "";
+   sorteiaNumero();   
+   desabilitaCampos();
+   defineChances();
+   mostraJogo()
+   } */
+}
+
+function sorteiaNumero(){   
+   let numInicialInteiro = parseInt(numInicial.innerText);
+   let numFinalInteiro = parseInt(numFinal.innerText);
+   numeroSorteado = Math.floor((Math.random()*((numFinalInteiro+1)-numInicialInteiro))+numInicialInteiro);   
+   console.log(numeroSorteado);
 }
 
 
@@ -111,20 +206,6 @@ function validaNumeros(){
       mensagemErro.innerHTML = "Assim fica fácil, fera! O número final deve ser maior que a soma do número inicial com o triplo da quantidade de chances";
       erro=true;
    }   
-}
-
-function sorteiaNumero(){   
-   let numInicialInteiro = parseInt(numInicial.value);
-   let numFinalInteiro = parseInt(numFinal.value);
-   numeroSorteado = Math.floor((Math.random()*(numFinalInteiro+1-numInicialInteiro))+numInicialInteiro);   
-   console.log(numeroSorteado);
-}
-
-function desabilitaCampos(){
-   numInicial.disabled = true;
-   numFinal.disabled = true;
-   qtdChances.disabled = true;
-   botaoRegras.disabled = true;
 }
 
 function defineChances(){
