@@ -33,20 +33,18 @@ const corrigeNumeros = (palavra) => {
 }
 
 //Speech recognition
-window.SpeechRecognition = window.SpeechRecognition || webkitSpeechRecognition;
 /* const SpeechGrammarList = window.SpeechGrammarList || webkitSpeechGrammarList;
 const SpeechRecognitionEvent = window.SpeechRecognitionEvent || webkitSpeechRecognitionEvent;
 recognition.continuous = false;
  */
+window.SpeechRecognition = window.SpeechRecognition || webkitSpeechRecognition;
 const recognition = new SpeechRecognition();
-recognition.lang = 'pt-Br';
-
+recognition.lang = 'pt-BR';
 
 recognition.start();
 
 recognition.onresult = (e) => {
   const result = e.results[0][0].transcript;
-
    if(result ==='reiniciar'){
       etapaJogo = 'inicio';
       instrucao.innerText = 'Você vai controlar tudo com a sua voz. Siga com cuidado as instruções. Se algo der errado diga "Reiniciar". Diga "Entendi" para ir para continuar';
@@ -55,11 +53,11 @@ recognition.onresult = (e) => {
    } else if(etapaJogo === 'inicio' && result ==='entendi'){
       etapaJogo = 'menorNumero';
       instrucao.innerText = 'Diga o primeiro número do seu intervalo de adivinhação. Para 0 diga "zero zero" e para 1 dia "zero um"';
-   } else if(etapaJogo === 'menorNumero'){
+   } else if(etapaJogo === 'menorNumero' && !isNaN(parseInt(corrigeNumeros(result)))){
       numInicial.innerText = corrigeNumeros(result);
       etapaJogo = 'maiorNumero';
       instrucao.innerText = 'Diga o segundo número do seu intervalo de adivinhação';
-   } else if(etapaJogo === 'maiorNumero'){
+   } else if(etapaJogo === 'maiorNumero' && !isNaN(parseInt(corrigeNumeros(result)))){
       numFinal.innerText = corrigeNumeros(result);
       etapaJogo = 'confirmar';
       instrucao.innerText = 'Podemos começar o jogo? Diga "agora" para começar';
