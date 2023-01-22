@@ -2,9 +2,9 @@
 - [X] Usuário decide quantas chances ele quer
 - [X] Sortear número
 - [X] Mostrar as tentativas do usuário na tela
-- [?] Estilização das tentativas na tela
-- [ ] Dar dicas para cada tentativa
+- [X] Estilização das tentativas na tela
 - [ ] Tratar casos de vitória e derrota
+- [ ] Dar dicas para cada tentativa
 - [ ] Validar as entradas do usuario para regras de dificuldade
 
 entender pq pode gerar numero com final < inicial

@@ -34,21 +34,14 @@ const numeros = {
    'vinte': 20
 }
 
-const corrigeNumeros = (palavra) => {
-   for(numero in numeros){
-      if(palavra === numero){
-         palavra = numeros[numero];   
-      }         
-   }
-   return parseInt(palavra);
-}
-
 const reiniciaJogo = () => {
    etapaJogo = 'inicio';
    instrucao.innerText = 'Você vai controlar tudo com a sua voz. Se o computador não entender seu número, coloque "zero" na frente, por exemplo "zero zero" ou "zero treze". Diga "Entendi" para continuar';
-   numInicial.innerText = '?';
+   [numInicial, numFinal, qtdChances, campoChute].forEach(elemento => elemento.innerText = '?');
+/*    numInicial.innerText = '?';
    numFinal.innerText = '?';
    qtdChances.innerText = '?';
+   campoChute.innerText = '?'; */
 }
 
 const etapasJogo = [
@@ -148,11 +141,21 @@ recognition.onend = () => {
    recognition.start()
 }
 
-function isNumber(value){
+
+const corrigeNumeros = (palavra) => {
+   for(numero in numeros){
+      if(palavra === numero){
+         palavra = numeros[numero];   
+      }         
+   }
+   return parseInt(palavra);
+}
+
+const isNumber = (value) => {
    return !isNaN(corrigeNumeros(value));
 }
 
-function sorteiaNumero(){   
+const sorteiaNumero = () => {   
    let numInicialInteiro = parseInt(numInicial.innerText);
    let numFinalInteiro = parseInt(numFinal.innerText);
    numeroSorteado = Math.floor((Math.random()*((numFinalInteiro+1)-numInicialInteiro))+numInicialInteiro);   
@@ -162,6 +165,10 @@ function sorteiaNumero(){
 function mostraChuteNaTela(palavra){
    campoChute.innerText = palavra;
 };
+
+function comparaChute(palavra){
+
+}
 
 
 
