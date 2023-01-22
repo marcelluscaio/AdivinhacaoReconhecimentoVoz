@@ -3,7 +3,7 @@
 - [X] Sortear número
 - [X] Mostrar as tentativas do usuário na tela
 - [X] Estilização das tentativas na tela
-- [ ] Tratar casos de vitória e derrota
+- [X] Tratar casos de vitória e derrota
 - [ ] Dar dicas para cada tentativa
 - [ ] Validar as entradas do usuario para regras de dificuldade
 

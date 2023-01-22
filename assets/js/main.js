@@ -82,10 +82,9 @@ const etapasJogo = [
    {etapaJogo: 'jogo',
    condicao: (palavra) => isNumber(palavra),
    acao: (palavra) => {
-      mostraChuteNaTela(corrigeNumeros(palavra));
-      //compara com sorteado
-      //dá dica
-
+      const palavraCorrigida = corrigeNumeros(palavra);
+      mostraChuteNaTela(palavraCorrigida);
+      acertou(corrigeNumeros(palavraCorrigida)) ? ganhaJogo() : processaErro(palavraCorrigida);
    },
    instrucao: '',
    proximaEtapa: 'jogo'
@@ -166,27 +165,28 @@ function mostraChuteNaTela(palavra){
    campoChute.innerText = palavra;
 };
 
-function comparaChute(palavra){
-
+const acertou = (palavra) => {
+   return palavra === numeroSorteado
 }
 
-
-
-function defineRegras(){
-   //validaNumeros();
-/*    if(erro === true){
-      erro = false;
-      return
-   } else{
-   let mensagemErro = document.querySelector("#mensagemErro");
-   mensagemErro.classList.add("escondido");
-   mensagemErro.innerHTML = "";
-   sorteiaNumero();   
-   desabilitaCampos();
-   defineChances();
-   mostraJogo()
-   } */
+const ganhaJogo = () => {
+   console.log("ganhou")
 }
+
+const perdeJogo = () => {
+   console.log("perdeu")
+}
+
+const processaErro = (palavra) => {
+   qtdChancesValor--;
+   qtdChances.innerText = qtdChancesValor;
+   qtdChancesValor > 0 ? daDica(palavra) : perdeJogo();
+}
+
+const daDica = (palavra) => {
+   console.log(palavra)
+}
+
 
 
 /* function defineRegras(e){
@@ -230,13 +230,6 @@ function validaNumeros(){
    }   
 }
 
-
-//segunda parte
-let botaoChute = document.querySelector("#botaoChute");
-botaoChute.addEventListener("click", fazTentativa);
-let botaoReiniciar = document.querySelector("#botaoReiniciar");
-botaoReiniciar.addEventListener("click", reiniciar);
-let chute = document.querySelector("#chute");
 
 
 function fazTentativa(e){
