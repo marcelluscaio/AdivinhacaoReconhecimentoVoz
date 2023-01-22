@@ -1,10 +1,14 @@
 - [X] Impedir usuário de inserir palavras que não sejam números
-- [ ] Validar as entradas do usuario
-- [ ] Usuário decide quantas chances ele quer
+- [X] Usuário decide quantas chances ele quer
 - [X] Sortear número
-- [ ] Mostrar as tentativas do usuário na tela
+- [X] Mostrar as tentativas do usuário na tela
+- [?] Estilização das tentativas na tela
 - [ ] Dar dicas para cada tentativa
 - [ ] Tratar casos de vitória e derrota
+- [ ] Validar as entradas do usuario para regras de dificuldade
+
+entender pq pode gerar numero com final < inicial
+corrigiri chances
 
 POnto alto:
 Abstração das regras

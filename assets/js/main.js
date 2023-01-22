@@ -1,11 +1,21 @@
 const instrucao = document.querySelector("#instrucao");
 const qtdChances = document.querySelector("#chances");
+const campoChute = document.querySelector('#chute');
 const numInicial = document.querySelector("#menor-numero");
 const numFinal = document.querySelector("#maior-numero");
 let qtdChancesValor;
 let numeroSorteado;
 let etapaJogo = 'inicio'
 let erro = false;
+
+//Speech recognition
+/* const SpeechGrammarList = window.SpeechGrammarList || webkitSpeechGrammarList;
+const SpeechRecognitionEvent = window.SpeechRecognitionEvent || webkitSpeechRecognitionEvent;
+recognition.continuous = false;
+ */
+window.SpeechRecognition = window.SpeechRecognition || webkitSpeechRecognition;
+const recognition = new SpeechRecognition();
+recognition.lang = 'pt-BR';
 
 const numeros = {
    'zero zero': 0,
@@ -30,12 +40,12 @@ const corrigeNumeros = (palavra) => {
          palavra = numeros[numero];   
       }         
    }
-   return palavra;
+   return parseInt(palavra);
 }
 
 const reiniciaJogo = () => {
    etapaJogo = 'inicio';
-   instrucao.innerText = 'Você vai controlar tudo com a sua voz. Siga com cuidado as instruções. Se algo der errado diga "Reiniciar". Diga "Entendi" para ir para continuar';
+   instrucao.innerText = 'Você vai controlar tudo com a sua voz. Se o computador não entender seu número, coloque "zero" na frente, por exemplo "zero zero" ou "zero treze". Diga "Entendi" para continuar';
    numInicial.innerText = '?';
    numFinal.innerText = '?';
    qtdChances.innerText = '?';
@@ -72,9 +82,20 @@ const etapasJogo = [
    },
    {etapaJogo: 'confirmar',
    condicao: (palavra) => palavra === 'agora',
-   acao: '',
+   acao: () => sorteiaNumero() ,
    instrucao: '',
-   proximaEtapa: ''
+   proximaEtapa: 'jogo'
+   },
+   {etapaJogo: 'jogo',
+   condicao: (palavra) => isNumber(palavra),
+   acao: (palavra) => {
+      mostraChuteNaTela(corrigeNumeros(palavra));
+      //compara com sorteado
+      //dá dica
+
+   },
+   instrucao: '',
+   proximaEtapa: 'jogo'
    },
 ];
 
@@ -94,27 +115,16 @@ function engrenagemJogo(etapaAtual, palavra){
    }
 }
 
-//Speech recognition
-/* const SpeechGrammarList = window.SpeechGrammarList || webkitSpeechGrammarList;
-const SpeechRecognitionEvent = window.SpeechRecognitionEvent || webkitSpeechRecognitionEvent;
-recognition.continuous = false;
- */
-window.SpeechRecognition = window.SpeechRecognition || webkitSpeechRecognition;
-const recognition = new SpeechRecognition();
-recognition.lang = 'pt-BR';
-
 recognition.start();
-
 recognition.onresult = (e) => {
   const result = e.results[0][0].transcript;
   engrenagemJogo(etapaJogo, result);
-
-   if(result ==='reiniciar'){
-     /*  etapaJogo = 'inicio';
+   /* if(result ==='reiniciar'){
+     etapaJogo = 'inicio';
       instrucao.innerText = 'Você vai controlar tudo com a sua voz. Siga com cuidado as instruções. Se algo der errado diga "Reiniciar". Diga "Entendi" para ir para continuar';
       numInicial.innerText = '?';
-      numFinal.innerText = '?'; */
-   } /* else if(etapaJogo === 'inicio' && result ==='entendi'){
+      numFinal.innerText = '?';
+   } */ /* else if(etapaJogo === 'inicio' && result ==='entendi'){
       etapaJogo = 'menorNumero';
       instrucao.innerText = 'Diga o primeiro número do seu intervalo de adivinhação. Para 0 diga "zero zero" e para 1 dia "zero um"';
    } */ /* else if(etapaJogo === 'menorNumero' && isNumber(result)){
@@ -129,9 +139,9 @@ recognition.onresult = (e) => {
       qtdChancesValor = corrigeNumeros(result);
       etapaJogo = 'confirmar';
       instrucao.innerText = 'Podemos começar o jogo? Diga "agora" para começar';
-   } */ else if(etapaJogo === 'confirmar' && result==="agora"){
+   } */ /* else if(etapaJogo === 'confirmar' && result==="agora"){
       console.log('Começar jogo')
-   }
+   } */
 }
 
 recognition.onend = () => {
@@ -139,8 +149,21 @@ recognition.onend = () => {
 }
 
 function isNumber(value){
-   return !isNaN(parseInt(corrigeNumeros(value)));
+   return !isNaN(corrigeNumeros(value));
 }
+
+function sorteiaNumero(){   
+   let numInicialInteiro = parseInt(numInicial.innerText);
+   let numFinalInteiro = parseInt(numFinal.innerText);
+   numeroSorteado = Math.floor((Math.random()*((numFinalInteiro+1)-numInicialInteiro))+numInicialInteiro);   
+   console.log(numeroSorteado);
+}
+
+function mostraChuteNaTela(palavra){
+   campoChute.innerText = palavra;
+};
+
+
 
 function defineRegras(){
    //validaNumeros();
@@ -157,14 +180,6 @@ function defineRegras(){
    mostraJogo()
    } */
 }
-
-function sorteiaNumero(){   
-   let numInicialInteiro = parseInt(numInicial.innerText);
-   let numFinalInteiro = parseInt(numFinal.innerText);
-   numeroSorteado = Math.floor((Math.random()*((numFinalInteiro+1)-numInicialInteiro))+numInicialInteiro);   
-   console.log(numeroSorteado);
-}
-
 
 
 /* function defineRegras(e){
@@ -206,15 +221,6 @@ function validaNumeros(){
       mensagemErro.innerHTML = "Assim fica fácil, fera! O número final deve ser maior que a soma do número inicial com o triplo da quantidade de chances";
       erro=true;
    }   
-}
-
-function defineChances(){
-   qtdChancesValor = parseInt(qtdChances.value);
-}
-
-function mostraJogo(){
-   let formularioJogo = document.querySelector(".formularioChute");
-   formularioJogo.classList.remove("escondido");
 }
 
 
