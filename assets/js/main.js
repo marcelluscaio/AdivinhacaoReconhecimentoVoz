@@ -1,12 +1,16 @@
 const instrucao = document.querySelector("#instrucao");
-const qtdChances = document.querySelector("#chances");
-const campoChute = document.querySelector('#chute');
 const numInicial = document.querySelector("#menor-numero");
 const numFinal = document.querySelector("#maior-numero");
+const qtdChances = document.querySelector("#chances");
+const campoChute = document.querySelector('#chute');
 let qtdChancesValor;
 let numeroSorteado;
-let etapaJogo = 'inicio'
-let erro = false;
+let etapaJogo = 'inicio';
+let ultimaTentativa = "";
+let arrayChutes = [];
+
+
+/* let erro = false; */
 
 //Speech recognition
 /* const SpeechGrammarList = window.SpeechGrammarList || webkitSpeechGrammarList;
@@ -33,6 +37,19 @@ const numeros = {
    'dez': 10,
    'vinte': 20
 }
+
+const errosChute = [
+   {
+      naoEValido: (palavra) => palavra<parseInt(numInicial.innerText) || palavra>parseInt(numFinal.innerText) ? true : false ,
+      tipo: 'fora da escala',
+      mensagem: "Esse não foi um chute muito bom. Chute dentro da escala =)",
+   },
+   {
+      naoEValido: (palavra) => arrayChutes.includes(palavra) ? true : false ,
+      tipo: 'repetido',
+      mensagem: "Esse você já chutou"
+   }
+];
 
 const reiniciaJogo = () => {
    etapaJogo = 'inicio';
@@ -80,9 +97,9 @@ const etapasJogo = [
    proximaEtapa: 'jogo'
    },
    {etapaJogo: 'jogo',
-   condicao: (palavra) => isNumber(palavra),
+   condicao: (palavra) => isNumber(palavra) && chuteEValido(palavra),
    acao: (palavra) => {
-      const palavraCorrigida = corrigeNumeros(palavra);
+      const palavraCorrigida = corrigeNumeros(palavra);      
       mostraChuteNaTela(palavraCorrigida);
       acertou(corrigeNumeros(palavraCorrigida)) ? ganhaJogo() : processaErro(palavraCorrigida);
    },
@@ -151,6 +168,7 @@ const corrigeNumeros = (palavra) => {
 }
 
 const isNumber = (value) => {
+   //diga um numero
    return !isNaN(corrigeNumeros(value));
 }
 
@@ -159,6 +177,19 @@ const sorteiaNumero = () => {
    let numFinalInteiro = parseInt(numFinal.innerText);
    numeroSorteado = Math.floor((Math.random()*((numFinalInteiro+1)-numInicialInteiro))+numInicialInteiro);   
    console.log(numeroSorteado);
+}
+
+const chuteEValido = (palavra) => {
+   const palavraCorrigida = corrigeNumeros(palavra);
+   let valido = true;
+   errosChute.map(tipoDeErro =>{
+      if(tipoDeErro.naoEValido(palavraCorrigida)){
+         instrucao.innerText = tipoDeErro.mensagem;
+         valido = false;
+         return
+      }
+   });
+   return valido;
 }
 
 function mostraChuteNaTela(palavra){
@@ -180,6 +211,8 @@ const perdeJogo = () => {
 const processaErro = (palavra) => {
    qtdChancesValor--;
    qtdChances.innerText = qtdChancesValor;
+   ultimaTentativa = palavra;
+   arrayChutes.push(palavra);
    qtdChancesValor > 0 ? daDica(palavra) : perdeJogo();
 }
 
@@ -246,22 +279,7 @@ function fazTentativa(e){
    }
 }
 
-//posso refazer essa função passando parametros para reduzir o codigo e juntar com a outra
-function validaChute(){
-   let chuteValor = chute.value; 
-   let mensagemErroDois = document.querySelector("#mensagemErroDois");   
-   if(chuteValor == "" ){
-      mensagemErroDois.classList.remove("escondido");
-      mensagemErroDois.innerHTML = "Coloque seu número primeiro";
-      erro=true;
-   } else if(Number.isInteger(parseFloat(chuteValor)) ==false){
-      mensagemErroDois.classList.remove("escondido");
-      mensagemErroDois.innerHTML = "Somente números inteiros";
-      erro=true;
-   } else if(parseInt(chuteValor)<parseInt(numInicial.value) || parseInt(chuteValor)>parseInt(numFinal.value)){
-      mensagemErroDois.classList.remove("escondido");
-      mensagemErroDois.innerHTML = "Esse não foi um chute muito bom. Chute dentro da escala =)";
-      erro=true;
+   } else if
    } else if(arrChute.includes(parseInt(chuteValor))){
       mensagemErroDois.classList.remove("escondido");
       mensagemErroDois.innerHTML = "Esse você já chutou";

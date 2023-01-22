@@ -4,6 +4,7 @@
 - [X] Mostrar as tentativas do usuário na tela
 - [X] Estilização das tentativas na tela
 - [X] Tratar casos de vitória e derrota
+- [X] Validar os chutes do usuario
 - [ ] Dar dicas para cada tentativa
 - [ ] Validar as entradas do usuario para regras de dificuldade
 
