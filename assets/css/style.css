@@ -1,3 +1,24 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root{
+   --fs-small: clamp(0.84rem, calc(0.52rem + 1.63vw), 3.13rem);
+   --fs-normal: clamp(1.13rem, calc(0.75rem + 1.88vw), 3.75rem);
+   --fs-title: clamp(1.50rem, calc(1.07rem + 2.14vw), 4.50rem);
+}
+
+.title{
+   font-size: var(--fs-title);
+   line-height: 1.2;
+}
+
+.font-normal{
+   font-size: var(--fs-normal);
+   line-height: 1.3;
+}
+
+.font-small{
+   font-size: var(--fs-small);
+   line-height: 1.4;
+}
