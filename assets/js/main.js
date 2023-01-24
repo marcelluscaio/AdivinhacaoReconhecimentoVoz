@@ -127,7 +127,7 @@ const etapasJogo = [
    {etapaJogo: 'confirmar',
    condicao: (palavra) => palavra === 'agora',
    acao: () => sorteiaNumero() ,
-   instrucao: '',
+   instrucao: 'Pode chutar um número',
    proximaEtapa: 'jogo'
    },
    {etapaJogo: 'jogo',
