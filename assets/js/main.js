@@ -105,7 +105,7 @@ const etapasJogo = [
    proximaEtapa: 'maiorNumero'
    },
    {etapaJogo: 'maiorNumero',
-   condicao: (palavra) => isNumber(palavra),
+   condicao: (palavra) => isNumber(palavra) && validaNumeroMaior(palavra),
    acao: (palavra) => 
          {
             numFinalInteiro = corrigeNumeros(palavra);
@@ -176,6 +176,15 @@ const numeros = {
    'nove': 9,
    'dez': 10,
    'vinte': 20
+}
+
+const validaNumeroMaior = (value) => {
+   if(corrigeNumeros(value) < numInicialInteiro){
+      instrucao.innerText = 'Número final deve ser maior que número inicial';
+      return false
+   }
+   
+   return true;
 }
 
 const sorteiaNumero = () => {
@@ -337,34 +346,12 @@ const dicas = [
       comparacaoAlvo: 'não passou',
       mensagem:'Você ainda está perto, mas está mais distante do seu alvo. Vá na outra direção!'
    }
-]
+];
 
-/*
-function validaNumeros(){
-   let numInicialValor = numInicial.value;
-   let numFinalValor = numFinal.value;
-   let qtdChancesValor = qtdChances.value;
-   let mensagemErro = document.querySelector("#mensagemErro");   
-   if(numInicialValor == "" || numFinalValor == "" || qtdChancesValor == ""){
-      mensagemErro.classList.remove("escondido");
-      mensagemErro.innerHTML = "Preencha todos os campos";
-      erro=true;
-   } else if(Number.isInteger(parseFloat(numInicialValor)) == false || Number.isInteger(parseFloat(numFinalValor)) == false || Number.isInteger(parseFloat(qtdChancesValor)) == false){
-      mensagemErro.classList.remove("escondido");
-      mensagemErro.innerHTML = "Somente números inteiros";
-      erro=true;
-   } else if(parseInt(numFinalValor)<parseInt(numInicialValor)){
-      mensagemErro.classList.remove("escondido");
-      mensagemErro.innerHTML = "O número final deve ser maior que o número inicial";
-      erro=true;
-   } else if(parseInt(numFinalValor)-parseInt(numInicialValor)<=parseInt(qtdChancesValor)*3){
-      mensagemErro.classList.remove("escondido");
-      mensagemErro.innerHTML = "Assim fica fácil, fera! O número final deve ser maior que a soma do número inicial com o triplo da quantidade de chances";
-      erro=true;
-   }   
-}
-
-*/
+//Regras do jogo
+//num final maior que numero inicial
+//if(parseInt(numFinalValor)-parseInt(numInicialValor)<=parseInt(qtdChancesValor)*3 
+//Assim fica fácil, fera! O número final deve ser maior que a soma do número inicial com o triplo da quantidade de chances
 
 
 

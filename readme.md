@@ -8,6 +8,7 @@
 - [X] Mostrar chutes na tela
 - [X] Criação do objeto dicas
 - [X] Dar dicas para cada tentativa
+- [ ] Validar: número maior deve ser maior que o menor
 - [ ] Validar as entradas do usuario para regras de dificuldade
 
 entender pq pode gerar numero com final < inicial
