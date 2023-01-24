@@ -14,58 +14,77 @@ let ultimaTentativa = "";
 let penultimaTentativa = "";
 let arrayChutes = [];
 
-
-/* let erro = false; */
-
 //Speech recognition
-/* const SpeechGrammarList = window.SpeechGrammarList || webkitSpeechGrammarList;
-const SpeechRecognitionEvent = window.SpeechRecognitionEvent || webkitSpeechRecognitionEvent;
-recognition.continuous = false;
- */
 window.SpeechRecognition = window.SpeechRecognition || webkitSpeechRecognition;
 const recognition = new SpeechRecognition();
 recognition.lang = 'pt-BR';
-
-const numeros = {
-   'zero zero': 0,
-   '00': 0,
-   '01': 1,
-   'um': 1,
-   'dois': 2,
-   'três': 3,
-   'quatro': 4,
-   'cinco': 5,
-   'seis': 6,
-   'sete': 7,
-   'oito': 8,
-   'nove': 9,
-   'dez': 10,
-   'vinte': 20
-}
-
-const errosChute = [
-   {
-      naoEValido: (palavra) => palavra<numInicialInteiro || palavra>numFinalInteiro ? true : false ,
-      tipo: 'fora da escala',
-      mensagem: "Esse não foi um chute muito bom. Chute dentro da escala =)",
-   },
-   {
-      naoEValido: (palavra) => arrayChutes.includes(palavra) ? true : false ,
-      tipo: 'repetido',
-      mensagem: "Esse você já chutou"
-   }
-];
 
 const reiniciaJogo = () => {
    etapaJogo = 'inicio';
    instrucao.innerText = 'Você vai controlar tudo com a sua voz. Se o computador não entender seu número, coloque "zero" na frente, por exemplo "zero zero" ou "zero treze". Diga "Entendi" para continuar';
    [numInicial, numFinal, qtdChances, campoChute].forEach(elemento => elemento.innerText = '?');
    [numInicialInteiro, numFinalInteiro, ultimaTentativa, penultimaTentativa].forEach(elemento => elemento = undefined);
+   dica.innerText = '';
    arrayChutes = [];
-/*    numInicial.innerText = '?';
+}
+/* 
+   COMPARAR CÓDIGO   
+   numInicial.innerText = '?';
    numFinal.innerText = '?';
    qtdChances.innerText = '?';
-   campoChute.innerText = '?'; */
+   campoChute.innerText = '?';
+*/
+
+recognition.start();
+recognition.onresult = (e) => {
+  const result = e.results[0][0].transcript;
+  engrenagemJogo(etapaJogo, result);
+}
+/* 
+   COMPARAR CÓDIGO
+   if(result ==='reiniciar'){
+     etapaJogo = 'inicio';
+      instrucao.innerText = 'Você vai controlar tudo com a sua voz. Siga com cuidado as instruções. Se algo der errado diga "Reiniciar". Diga "Entendi" para ir para continuar';
+      numInicial.innerText = '?';
+      numFinal.innerText = '?';
+   } */ /* else if(etapaJogo === 'inicio' && result ==='entendi'){
+      etapaJogo = 'menorNumero';
+      instrucao.innerText = 'Diga o primeiro número do seu intervalo de adivinhação. Para 0 diga "zero zero" e para 1 dia "zero um"';
+   } */ /* else if(etapaJogo === 'menorNumero' && isNumber(result)){
+      numInicial.innerText = corrigeNumeros(result);
+      etapaJogo = 'maiorNumero';
+      instrucao.innerText = 'Diga o segundo número do seu intervalo de adivinhação';
+   } */ /* else if(etapaJogo === 'maiorNumero' && isNumber(result)){
+      numFinal.innerText = corrigeNumeros(result);
+      etapaJogo = 'chances';
+      instrucao.innerText = 'Quantas chances para adivinhar você quer?';
+   } *//*  else if(etapaJogo === 'chances' && isNumber(result)){
+      qtdChancesValor = corrigeNumeros(result);
+      etapaJogo = 'confirmar';
+      instrucao.innerText = 'Podemos começar o jogo? Diga "agora" para começar';
+   } */ /* else if(etapaJogo === 'confirmar' && result==="agora"){
+      console.log('Começar jogo')
+   } 
+*/
+
+recognition.onend = () => {
+   recognition.start()
+}
+
+function engrenagemJogo(etapaAtual, palavra){
+   if(palavra === "reiniciar"){
+      reiniciaJogo();
+      return
+   }
+   const objetoEtapa = etapasJogo.filter(elemento => elemento.etapaJogo === etapaAtual);
+   console.log(objetoEtapa);
+   if( objetoEtapa[0].condicao(palavra)){
+      instrucao.innerText = objetoEtapa[0].instrucao;
+      etapaJogo = objetoEtapa[0].proximaEtapa;
+      if(objetoEtapa[0].acao){
+         objetoEtapa[0].acao(palavra);
+      };
+   }
 }
 
 const etapasJogo = [
@@ -129,53 +148,8 @@ const etapasJogo = [
    }
 ];
 
-function engrenagemJogo(etapaAtual, palavra){
-   if(palavra === "reiniciar"){
-      reiniciaJogo();
-      return
-   }
-   const objetoEtapa = etapasJogo.filter(elemento => elemento.etapaJogo === etapaAtual);
-   console.log(objetoEtapa);
-   if( objetoEtapa[0].condicao(palavra)){
-      instrucao.innerText = objetoEtapa[0].instrucao;
-      etapaJogo = objetoEtapa[0].proximaEtapa;
-      if(objetoEtapa[0].acao){
-         objetoEtapa[0].acao(palavra);
-      };
-   }
-}
-
-recognition.start();
-recognition.onresult = (e) => {
-  const result = e.results[0][0].transcript;
-  engrenagemJogo(etapaJogo, result);
-   /* if(result ==='reiniciar'){
-     etapaJogo = 'inicio';
-      instrucao.innerText = 'Você vai controlar tudo com a sua voz. Siga com cuidado as instruções. Se algo der errado diga "Reiniciar". Diga "Entendi" para ir para continuar';
-      numInicial.innerText = '?';
-      numFinal.innerText = '?';
-   } */ /* else if(etapaJogo === 'inicio' && result ==='entendi'){
-      etapaJogo = 'menorNumero';
-      instrucao.innerText = 'Diga o primeiro número do seu intervalo de adivinhação. Para 0 diga "zero zero" e para 1 dia "zero um"';
-   } */ /* else if(etapaJogo === 'menorNumero' && isNumber(result)){
-      numInicial.innerText = corrigeNumeros(result);
-      etapaJogo = 'maiorNumero';
-      instrucao.innerText = 'Diga o segundo número do seu intervalo de adivinhação';
-   } */ /* else if(etapaJogo === 'maiorNumero' && isNumber(result)){
-      numFinal.innerText = corrigeNumeros(result);
-      etapaJogo = 'chances';
-      instrucao.innerText = 'Quantas chances para adivinhar você quer?';
-   } *//*  else if(etapaJogo === 'chances' && isNumber(result)){
-      qtdChancesValor = corrigeNumeros(result);
-      etapaJogo = 'confirmar';
-      instrucao.innerText = 'Podemos começar o jogo? Diga "agora" para começar';
-   } */ /* else if(etapaJogo === 'confirmar' && result==="agora"){
-      console.log('Começar jogo')
-   } */
-}
-
-recognition.onend = () => {
-   recognition.start()
+const isNumber = (value) => {
+   return !isNaN(corrigeNumeros(value));
 }
 
 const corrigeNumeros = (palavra) => {
@@ -187,13 +161,25 @@ const corrigeNumeros = (palavra) => {
    return parseInt(palavra);
 }
 
-const isNumber = (value) => {
-   return !isNaN(corrigeNumeros(value));
+const numeros = {
+   'zero zero': 0,
+   '00': 0,
+   '01': 1,
+   'um': 1,
+   'dois': 2,
+   'três': 3,
+   'quatro': 4,
+   'cinco': 5,
+   'seis': 6,
+   'sete': 7,
+   'oito': 8,
+   'nove': 9,
+   'dez': 10,
+   'vinte': 20
 }
 
 const sorteiaNumero = () => {
-   return numeroSorteado = Math.floor((Math.random()*((numFinalInteiro+1)-numInicialInteiro))+numInicialInteiro);
-   //tirar return?
+   numeroSorteado = Math.floor((Math.random()*((numFinalInteiro+1)-numInicialInteiro))+numInicialInteiro);
 }
 
 const chuteEValido = (palavra) => {
@@ -202,6 +188,7 @@ const chuteEValido = (palavra) => {
    let mensagem = '';
    errosChute.forEach(tipoDeErro =>{
       if(tipoDeErro.naoEValido(palavraCorrigida)){
+         dica.innerText = '';
          mensagem = tipoDeErro.mensagem;
          valido = false;
       }
@@ -209,6 +196,19 @@ const chuteEValido = (palavra) => {
    if(mensagem) instrucao.innerText = mensagem; 
    return valido;
 }
+
+const errosChute = [
+   {
+      naoEValido: (palavra) => palavra<numInicialInteiro || palavra>numFinalInteiro ? true : false ,
+      tipo: 'fora da escala',
+      mensagem: "Esse não foi um chute muito bom. Chute dentro da escala =)",
+   },
+   {
+      naoEValido: (palavra) => arrayChutes.includes(palavra) ? true : false ,
+      tipo: 'repetido',
+      mensagem: "Esse você já chutou"
+   }
+];
 
 function mostraChuteNaTela(palavra){
    campoChute.innerText = palavra;
@@ -220,6 +220,7 @@ const acertou = (palavra) => {
 
 const ganhaJogo = () => {
    instrucao.innerText = "Você venceu! Fale 'Reiniciar' para jogar de novo";
+   dica.innerText = '';
    etapaJogo = "fim";
 }
 
@@ -338,60 +339,7 @@ const dicas = [
    }
 ]
 
-
-
-
 /*
-function comparaChute(){
-      
-      else if(tentativas === ""){
-         mensagemResultado.classList.remove("escondido");
-         let diferencaPositiva = Math.sign(chuteValor-numeroSorteado)===1 ? chuteValor-numeroSorteado : numeroSorteado-chuteValor;
-        
-        
-         if(diferencaPositiva<(escala/4)){
-            mensagemResultado.innerHTML = `Primeira tentativa e já está quente! Tente de novo. Você tem mais ${qtdChancesValor} chances.`;         
-         } 
-         
-         
-         else{
-            mensagemResultado.innerHTML = `Está um pouco longe do seu alvo. Mas essa é só a primeira tentativa! Tente de novo. Você tem mais ${qtdChancesValor} chances.`; 
-         }
-
-
-         tentativas = chuteValor;
-      } 
-      
-      
-      
-      else if((tentativas<numeroSorteado && chuteValor<numeroSorteado)||(tentativas>numeroSorteado && chuteValor>numeroSorteado)){
-         mensagemResultado.classList.remove("escondido");
-         let diferencaPositivaAntigo = Math.sign(tentativas-numeroSorteado)===1 ? tentativas-numeroSorteado : numeroSorteado-tentativas;
-         let diferencaPositivaNovo = Math.sign(chuteValor-numeroSorteado)===1 ? chuteValor-numeroSorteado : numeroSorteado-chuteValor;
-         
-         
-         let frioOuQuente = diferencaPositivaNovo<(escala/4) ? "quente" : "frio";
-
-
-         if(diferencaPositivaAntigo>diferencaPositivaNovo){
-            let mensagem = frioOuQuente ==="quente"? ", cada vez mais quente" : ", mas ainda está frio";
-            mensagemResultado.innerHTML = `Está mais perto do seu alvo${mensagem}! Esse é o caminho. Tente de novo. Você tem mais ${qtdChancesValor} chances.`;
-         } else{
-            let mensagem = frioOuQuente ==="quente"? ", mas ainda está quente! Não desanima." : ". Não desanima.";
-            mensagemResultado.innerHTML = `Esfriou! Agora você está mais longe do seu alvo${mensagem} Tente de novo. Você tem mais ${qtdChancesValor} chances.`;
-         }
-         tentativas = chuteValor;
-      }  else{
-         mensagemResultado.classList.remove("escondido"); 
-         let diferencaPositivaNovo = Math.sign(chuteValor-numeroSorteado)===1 ? chuteValor-numeroSorteado : numeroSorteado-chuteValor;
-         let frioOuQuente = diferencaPositivaNovo<(escala/4) ? "quente" : "frio"; 
-         let mensagem = frioOuQuente ==="quente"? ", e está bem perto!" : ", mas foi longe demais. Volte alguns números.";       
-         mensagemResultado.innerHTML = `Você passou pelo seu alvo${mensagem} O número sorteado está entre este chute e o anterior. Você tem mais ${qtdChancesValor} chances.`;
-         tentativas = chuteValor;
-      }
-   }   
-}
-
 function validaNumeros(){
    let numInicialValor = numInicial.value;
    let numFinalValor = numFinal.value;
