@@ -10,6 +10,7 @@ let qtdChancesValor;
 let numeroSorteado;
 let etapaJogo = 'inicio';
 let ultimaTentativa = "";
+let penultimaTentativa = "";
 let arrayChutes = [];
 
 
@@ -58,7 +59,8 @@ const reiniciaJogo = () => {
    etapaJogo = 'inicio';
    instrucao.innerText = 'Você vai controlar tudo com a sua voz. Se o computador não entender seu número, coloque "zero" na frente, por exemplo "zero zero" ou "zero treze". Diga "Entendi" para continuar';
    [numInicial, numFinal, qtdChances, campoChute].forEach(elemento => elemento.innerText = '?');
-   [numInicialInteiro, numFinalInteiro].forEach(elemento => elemento = undefined);
+   [numInicialInteiro, numFinalInteiro, ultimaTentativa, penultimaTentativa].forEach(elemento => elemento = undefined);
+   arrayChutes = [];
 /*    numInicial.innerText = '?';
    numFinal.innerText = '?';
    qtdChances.innerText = '?';
@@ -228,6 +230,7 @@ const perdeJogo = () => {
 const processaErro = (palavra) => {
    qtdChancesValor--;
    qtdChances.innerText = qtdChancesValor;
+   penultimaTentativa = ultimaTentativa;
    ultimaTentativa = palavra;
    atualizaListaChutes(palavra);
    qtdChancesValor > 0 ? daDica(palavra) : perdeJogo();
@@ -240,47 +243,133 @@ const atualizaListaChutes = (palavra) =>{
 }
 
 const comparaChute = (chute) => {
-   const escala = numFinalInteiro-numInicialInteiro;
+   const escala = numFinalInteiro-numInicialInteiro+1;
+   const diferencaChuteAlvo = Math.abs(chute - numeroSorteado);
+   const razaoEscalaChute = escala / diferencaChuteAlvo;
+   const temperatura = razaoEscalaChute > 4 ? 'quente' : 'frio';
+    
+   let comparacaoAnterior;
+   if(penultimaTentativa){
+      const diferencaAnteriorChuteAlvo = Math.abs(penultimaTentativa - numeroSorteado);
+      comparacaoAnterior = diferencaAnteriorChuteAlvo > diferencaChuteAlvo ? 'aproximou' : 'afastou';
+   }
+
+   let comparacaoAlvo = ((chute < numeroSorteado) && (penultimaTentativa < numeroSorteado)) || ((chute > numeroSorteado) && (penultimaTentativa > numeroSorteado)) ? 'nao passou' : 'passou'
+   
 }
 
 const daDica = (palavra) => {
    console.log(palavra)
 }
 
+const dicas = [
+   {
+      tentativas: false,
+      temperatura: 'quente',
+      comparacaoAnterior: '',
+      comparacaoAlvo: '',
+      mensagem: 'Primeira tentativa e já está quente! Tente de novo.'
+   },
+   {
+      tentativas: false,
+      temperatura: 'frio',
+      comparacaoAnterior: '',
+      comparacaoAlvo: '',
+      mensagem:'Está um pouco longe do seu alvo. Mas essa é só a primeira tentativa! Tente de novo.'
+   },
+   {
+      tentativas: true,
+      temperatura: 'frio',
+      comparacaoAnterior: 'aproximou',
+      comparacaoAlvo: 'passou',
+      mensagem:'Você passou do seu alvo, mas está mais perto que antes. Ainda está frio, mas eu acredito em você!'
+   },
+   {
+      tentativas: true,
+      temperatura: 'frio',
+      comparacaoAnterior: 'aproximou',
+      comparacaoAlvo: 'não passou',
+      mensagem:'Você está mais perto que antes, mas ainda está frio! O caminho é esse!'
+   },
+   {
+      tentativas: true,
+      temperatura: 'frio',
+      comparacaoAnterior: 'afastou',
+      comparacaoAlvo: 'passou',
+      mensagem:'Você passou pelo seu alvo, e está mais distante que antes. Está quase congelando. Tente voltar alguns números =)'
+   },
+   {
+      tentativas: true,
+      temperatura: 'frio',
+      comparacaoAnterior: 'afastou',
+      comparacaoAlvo: 'não passou',
+      mensagem:'Você está indo na direção oposta do seu alvo. Está quase congelando. Vá para o outro lado =)'
+   },
+   {
+      tentativas: true,
+      temperatura: 'quente',
+      comparacaoAnterior: 'aproximou',
+      comparacaoAlvo: 'passou',
+      mensagem:'Você chegou muito perto do seu alvo, mas passou batido por ele. Ainda está bem perto, continue tentando!'
+   },
+   {
+      tentativas: true,
+      temperatura: 'quente',
+      comparacaoAnterior: 'aproximou',
+      comparacaoAlvo: 'não passou',
+      mensagem:'Você está no caminho certo, está bem perto do seu alvo! Continue assim =)'
+   },
+   {
+      tentativas: true,
+      temperatura: 'quente',
+      comparacaoAnterior: 'afastou',
+      comparacaoAlvo: 'passou',
+      mensagem:'Você ainda está perto, mas passou direto pelo seu alvo, e está mais distante que antes. Não desanima!'
+   },
+   {
+      tentativas: true,
+      temperatura: 'quente',
+      comparacaoAnterior: 'afastou',
+      comparacaoAlvo: 'não passou',
+      mensagem:'Você ainda está perto, mas está mais distante do seu alvo. Vá na outra direção!'
+   }
+]
+
+
 
 
 /*
 function comparaChute(){
-
       
-      
-      for(i=0;i<arrChute.length;i++){
-         if(i===arrChute.length-1){
-            listaChute.innerHTML += `${arrChute[i]}`;
-         } else{
-            listaChute.innerHTML += `${arrChute[i]} - `;      
-         }         
-      }      
-
-      if(qtdChancesValor === 0){
-         mensagemResultado.classList.remove("escondido");
-         mensagemResultado.innerHTML = `Puxa, você esgotou suas tentativas. O número era ${numeroSorteado}. Clica aqui embaixo no Reiniciar para jogar de novo!`;
-         botaoChute.disabled=true;
-         chute.disabled=true;
-      } else if(tentativas === ""){
+      else if(tentativas === ""){
          mensagemResultado.classList.remove("escondido");
          let diferencaPositiva = Math.sign(chuteValor-numeroSorteado)===1 ? chuteValor-numeroSorteado : numeroSorteado-chuteValor;
+        
+        
          if(diferencaPositiva<(escala/4)){
             mensagemResultado.innerHTML = `Primeira tentativa e já está quente! Tente de novo. Você tem mais ${qtdChancesValor} chances.`;         
-         } else{
+         } 
+         
+         
+         else{
             mensagemResultado.innerHTML = `Está um pouco longe do seu alvo. Mas essa é só a primeira tentativa! Tente de novo. Você tem mais ${qtdChancesValor} chances.`; 
-         }         
+         }
+
+
          tentativas = chuteValor;
-      } else if((tentativas<numeroSorteado && chuteValor<numeroSorteado)||(tentativas>numeroSorteado && chuteValor>numeroSorteado)){
+      } 
+      
+      
+      
+      else if((tentativas<numeroSorteado && chuteValor<numeroSorteado)||(tentativas>numeroSorteado && chuteValor>numeroSorteado)){
          mensagemResultado.classList.remove("escondido");
          let diferencaPositivaAntigo = Math.sign(tentativas-numeroSorteado)===1 ? tentativas-numeroSorteado : numeroSorteado-tentativas;
          let diferencaPositivaNovo = Math.sign(chuteValor-numeroSorteado)===1 ? chuteValor-numeroSorteado : numeroSorteado-chuteValor;
+         
+         
          let frioOuQuente = diferencaPositivaNovo<(escala/4) ? "quente" : "frio";
+
+
          if(diferencaPositivaAntigo>diferencaPositivaNovo){
             let mensagem = frioOuQuente ==="quente"? ", cada vez mais quente" : ", mas ainda está frio";
             mensagemResultado.innerHTML = `Está mais perto do seu alvo${mensagem}! Esse é o caminho. Tente de novo. Você tem mais ${qtdChancesValor} chances.`;

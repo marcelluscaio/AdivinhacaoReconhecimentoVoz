@@ -5,6 +5,8 @@
 - [X] Estilização das tentativas na tela
 - [X] Tratar casos de vitória e derrota
 - [X] Validar os chutes do usuario
+- [X] Mostrar chutes na tela
+- [X] Criação do objeto dicas
 - [ ] Dar dicas para cada tentativa
 - [ ] Validar as entradas do usuario para regras de dificuldade
 
@@ -14,6 +16,7 @@ corrigiri chances
 POnto alto:
 Abstração das regras
 .container-lista-chutes:has(:not(span:empty))::before
+Dicas baseadas em 10 cenários diferentes
 
 
 
