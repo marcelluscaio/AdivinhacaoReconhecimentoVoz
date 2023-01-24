@@ -1,6 +1,8 @@
 const instrucao = document.querySelector("#instrucao");
 const numInicial = document.querySelector("#menor-numero");
+let numInicialInteiro;
 const numFinal = document.querySelector("#maior-numero");
+let numFinalInteiro;
 const qtdChances = document.querySelector("#chances");
 const campoChute = document.querySelector('#chute');
 let qtdChancesValor;
@@ -40,7 +42,7 @@ const numeros = {
 
 const errosChute = [
    {
-      naoEValido: (palavra) => palavra<parseInt(numInicial.innerText) || palavra>parseInt(numFinal.innerText) ? true : false ,
+      naoEValido: (palavra) => palavra<numInicialInteiro || palavra>numFinalInteiro ? true : false ,
       tipo: 'fora da escala',
       mensagem: "Esse não foi um chute muito bom. Chute dentro da escala =)",
    },
@@ -55,6 +57,7 @@ const reiniciaJogo = () => {
    etapaJogo = 'inicio';
    instrucao.innerText = 'Você vai controlar tudo com a sua voz. Se o computador não entender seu número, coloque "zero" na frente, por exemplo "zero zero" ou "zero treze". Diga "Entendi" para continuar';
    [numInicial, numFinal, qtdChances, campoChute].forEach(elemento => elemento.innerText = '?');
+   [numInicialInteiro, numFinalInteiro].forEach(elemento => elemento = undefined);
 /*    numInicial.innerText = '?';
    numFinal.innerText = '?';
    qtdChances.innerText = '?';
@@ -70,13 +73,21 @@ const etapasJogo = [
    },
    {etapaJogo: 'menorNumero',
    condicao: (palavra) => isNumber(palavra),
-   acao: (palavra) => numInicial.innerText = corrigeNumeros(palavra),
+   acao: (palavra) => 
+         {
+            numInicialInteiro = corrigeNumeros(palavra);
+            numInicial.innerText = numInicialInteiro
+         },
    instrucao: 'Diga o segundo número do seu intervalo de adivinhação',
    proximaEtapa: 'maiorNumero'
    },
    {etapaJogo: 'maiorNumero',
    condicao: (palavra) => isNumber(palavra),
-   acao: (palavra) => numFinal.innerText = corrigeNumeros(palavra),
+   acao: (palavra) => 
+         {
+            numFinalInteiro = corrigeNumeros(palavra);
+            numFinal.innerText = numFinalInteiro
+         },
    instrucao: 'Quantas chances para adivinhar você quer?',
    proximaEtapa: 'chances'
    },
@@ -176,11 +187,9 @@ const isNumber = (value) => {
    return !isNaN(corrigeNumeros(value));
 }
 
-const sorteiaNumero = () => {   
-   let numInicialInteiro = parseInt(numInicial.innerText);
-   let numFinalInteiro = parseInt(numFinal.innerText);
-   numeroSorteado = Math.floor((Math.random()*((numFinalInteiro+1)-numInicialInteiro))+numInicialInteiro);   
-   console.log(numeroSorteado);
+const sorteiaNumero = () => {
+   return numeroSorteado = Math.floor((Math.random()*((numFinalInteiro+1)-numInicialInteiro))+numInicialInteiro);
+   //tirar return?
 }
 
 const chuteEValido = (palavra) => {
@@ -227,24 +236,13 @@ const daDica = (palavra) => {
    console.log(palavra)
 }
 
+const comparaChute = (chute) => {
 
-
-/* function defineRegras(e){
-   e.preventDefault();
-   validaNumeros();
-   if(erro === true){
-      erro = false;
-      return
-   } else{
-   let mensagemErro = document.querySelector("#mensagemErro");
-   mensagemErro.classList.add("escondido");
-   mensagemErro.innerHTML = "";
-   sorteiaNumero();   
-   desabilitaCampos();
-   defineChances();
-   mostraJogo()
-   }
 }
+
+
+
+/*
 
 function validaNumeros(){
    let numInicialValor = numInicial.value;
@@ -271,31 +269,11 @@ function validaNumeros(){
 }
 
 
-
-function fazTentativa(e){
-   e.preventDefault();
-   validaChute();
-   if(erro === true){
-      erro = false;
-      return
-   } else{
-   let mensagemErroDois = document.querySelector("#mensagemErroDois"); 
-   mensagemErroDois.classList.add("escondido");
-   mensagemErroDois.innerHTML = "";
-   comparaChute();
-   }
-}
-
-   } else if
-   } else if(arrChute.includes(parseInt(chuteValor))){
-      mensagemErroDois.classList.remove("escondido");
-      mensagemErroDois.innerHTML = "Esse você já chutou";
-      erro=true;
-   }      
-}
-
 let tentativas ="";
 let arrChute = [];
+
+
+
 
 function comparaChute(){
    let chuteValor = parseInt(chute.value);
