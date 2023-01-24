@@ -1,4 +1,5 @@
 const instrucao = document.querySelector("#instrucao");
+const dica = document.querySelector("#dica");
 const numInicial = document.querySelector("#menor-numero");
 let numInicialInteiro;
 const numFinal = document.querySelector("#maior-numero");
@@ -223,7 +224,7 @@ const ganhaJogo = () => {
 }
 
 const perdeJogo = () => {
-   instrucao.innerText = "Suas chances acabaram! Fale 'Reiniciar' para jogar de novo";
+   instrucao.innerText = `Suas chances acabaram! O número era ${numeroSorteado} Fale 'Reiniciar' para jogar de novo`;
    etapaJogo = "fim";
 }
 
@@ -242,24 +243,26 @@ const atualizaListaChutes = (palavra) =>{
    listaChutesCampo.innerText =`${arrayChutes.map((chute, i) => i>0 ? " " + chute : chute)}`;
 }
 
-const comparaChute = (chute) => {
+const daDica = (chute) => {
    const escala = numFinalInteiro-numInicialInteiro+1;
    const diferencaChuteAlvo = Math.abs(chute - numeroSorteado);
    const razaoEscalaChute = escala / diferencaChuteAlvo;
    const temperatura = razaoEscalaChute > 4 ? 'quente' : 'frio';
     
-   let comparacaoAnterior;
-   if(penultimaTentativa){
+   let comparacaoAnterior = "";
+   let comparacaoAlvo = "";
+   if(arrayChutes.length > 1){
       const diferencaAnteriorChuteAlvo = Math.abs(penultimaTentativa - numeroSorteado);
       comparacaoAnterior = diferencaAnteriorChuteAlvo > diferencaChuteAlvo ? 'aproximou' : 'afastou';
+      comparacaoAlvo = ((chute < numeroSorteado) && (penultimaTentativa < numeroSorteado)) || ((chute > numeroSorteado) && (penultimaTentativa > numeroSorteado)) ? 'não passou' : 'passou';
    }
 
-   let comparacaoAlvo = ((chute < numeroSorteado) && (penultimaTentativa < numeroSorteado)) || ((chute > numeroSorteado) && (penultimaTentativa > numeroSorteado)) ? 'nao passou' : 'passou'
-   
-}
-
-const daDica = (palavra) => {
-   console.log(palavra)
+   let filtroTentativas = dicas.filter(e => e.tentativas === arrayChutes.length > 1);
+   let filtroTemperatura = filtroTentativas.filter(e => e.temperatura === temperatura);
+   let filtroComparaAnterior = filtroTemperatura.filter(e => e.comparacaoAnterior === comparacaoAnterior);
+   let filtroComparaAlvo = filtroComparaAnterior.filter(e => e.comparacaoAlvo === comparacaoAlvo || e.comparacaoAlvo === "");
+   let mensagemDica = filtroComparaAlvo[0].mensagem;
+    dica.innerText = mensagemDica;
 }
 
 const dicas = [

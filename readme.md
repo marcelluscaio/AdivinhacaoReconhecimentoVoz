@@ -7,7 +7,7 @@
 - [X] Validar os chutes do usuario
 - [X] Mostrar chutes na tela
 - [X] Criação do objeto dicas
-- [ ] Dar dicas para cada tentativa
+- [X] Dar dicas para cada tentativa
 - [ ] Validar as entradas do usuario para regras de dificuldade
 
 entender pq pode gerar numero com final < inicial
