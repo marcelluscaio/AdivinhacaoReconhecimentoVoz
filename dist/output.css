@@ -567,10 +567,6 @@ video {
   justify-content: space-around;
 }
 
-.gap-4 {
-  gap: 1rem;
-}
-
 .gap-2 {
   gap: 0.5rem;
 }
@@ -629,10 +625,6 @@ video {
 
 .font-bold {
   font-weight: 700;
-}
-
-.leading-none {
-  line-height: 1;
 }
 
 .text-white {

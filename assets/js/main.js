@@ -106,6 +106,12 @@ const etapasJogo = [
    instrucao: '',
    proximaEtapa: 'jogo'
    },
+   {etapaJogo: 'fim',
+   condicao: () =>  false,
+   acao: () => false,
+   instrucao: '',
+   proximaEtapa: 'fim'
+   }
 ];
 
 function engrenagemJogo(etapaAtual, palavra){
@@ -116,11 +122,11 @@ function engrenagemJogo(etapaAtual, palavra){
    const objetoEtapa = etapasJogo.filter(elemento => elemento.etapaJogo === etapaAtual);
    console.log(objetoEtapa);
    if( objetoEtapa[0].condicao(palavra)){
+      instrucao.innerText = objetoEtapa[0].instrucao;
+      etapaJogo = objetoEtapa[0].proximaEtapa;
       if(objetoEtapa[0].acao){
          objetoEtapa[0].acao(palavra);
       };
-      instrucao.innerText = objetoEtapa[0].instrucao;
-      etapaJogo = objetoEtapa[0].proximaEtapa;
    }
 }
 
@@ -157,7 +163,6 @@ recognition.onend = () => {
    recognition.start()
 }
 
-
 const corrigeNumeros = (palavra) => {
    for(numero in numeros){
       if(palavra === numero){
@@ -168,7 +173,6 @@ const corrigeNumeros = (palavra) => {
 }
 
 const isNumber = (value) => {
-   //diga um numero
    return !isNaN(corrigeNumeros(value));
 }
 
@@ -182,13 +186,14 @@ const sorteiaNumero = () => {
 const chuteEValido = (palavra) => {
    const palavraCorrigida = corrigeNumeros(palavra);
    let valido = true;
-   errosChute.map(tipoDeErro =>{
+   let mensagem = '';
+   errosChute.forEach(tipoDeErro =>{
       if(tipoDeErro.naoEValido(palavraCorrigida)){
-         instrucao.innerText = tipoDeErro.mensagem;
+         mensagem = tipoDeErro.mensagem;
          valido = false;
-         return
       }
    });
+   if(mensagem) instrucao.innerText = mensagem; 
    return valido;
 }
 
@@ -201,11 +206,13 @@ const acertou = (palavra) => {
 }
 
 const ganhaJogo = () => {
-   console.log("ganhou")
+   instrucao.innerText = "Você venceu! Fale 'Reiniciar' para jogar de novo";
+   etapaJogo = "fim";
 }
 
 const perdeJogo = () => {
-   console.log("perdeu")
+   instrucao.innerText = "Suas chances acabaram! Fale 'Reiniciar' para jogar de novo";
+   etapaJogo = "fim";
 }
 
 const processaErro = (palavra) => {
