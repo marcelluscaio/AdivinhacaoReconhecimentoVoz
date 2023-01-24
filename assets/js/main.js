@@ -109,13 +109,13 @@ const etapasJogo = [
    acao: (palavra) => 
          {
             numFinalInteiro = corrigeNumeros(palavra);
-            numFinal.innerText = numFinalInteiro
+            numFinal.innerText = numFinalInteiro;
          },
-   instrucao: 'Quantas chances para adivinhar você quer?',
+   instrucao: `Quantas chances para adivinhar você quer?`,
    proximaEtapa: 'chances'
    },
    {etapaJogo: 'chances',
-   condicao: (palavra) => isNumber(palavra),
+   condicao: (palavra) => isNumber(palavra) && validaChances(palavra),
    acao: (palavra) =>
          {
             qtdChancesValor = corrigeNumeros(palavra);
@@ -183,8 +183,16 @@ const validaNumeroMaior = (value) => {
       instrucao.innerText = 'Número final deve ser maior que número inicial';
       return false
    }
-   
+      
    return true;
+}
+
+const validaChances = (value) => {
+   if(corrigeNumeros(value) > Math.ceil((numFinalInteiro - numInicialInteiro) / 3)){
+      instrucao.innerText = `Seu número de chances deve ser menor que ${Math.ceil((numFinalInteiro - numInicialInteiro) / 3)}, se não fica muito fácil!`;
+      return false
+   }
+   return true
 }
 
 const sorteiaNumero = () => {
@@ -349,7 +357,6 @@ const dicas = [
 ];
 
 //Regras do jogo
-//num final maior que numero inicial
 //if(parseInt(numFinalValor)-parseInt(numInicialValor)<=parseInt(qtdChancesValor)*3 
 //Assim fica fácil, fera! O número final deve ser maior que a soma do número inicial com o triplo da quantidade de chances
 
