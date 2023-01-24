@@ -3,9 +3,9 @@
 @tailwind utilities;
 
 :root{
-   --fs-small: clamp(0.84rem, calc(0.52rem + 1.63vw), 3.13rem);
-   --fs-normal: clamp(1.13rem, calc(0.75rem + 1.88vw), 3.75rem);
-   --fs-title: clamp(1.50rem, calc(1.07rem + 2.14vw), 4.50rem);
+   --fs-small: clamp(0.88rem, calc(0.66rem + 1.07vw), 2.38rem);
+   --fs-normal: clamp(1.17rem, calc(0.93rem + 1.20vw), 2.85rem);
+   --fs-title: clamp(1.56rem, calc(1.29rem + 1.33vw), 3.42rem);
 }
 
 .title{
@@ -25,5 +25,4 @@
 
 .container-lista-chutes:has(:not(span:empty))::before{
    content: 'Chutes: ';
-   color: white;
 }

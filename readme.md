@@ -13,6 +13,7 @@ corrigiri chances
 
 POnto alto:
 Abstração das regras
+.container-lista-chutes:has(:not(span:empty))::before
 
 
 

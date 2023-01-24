@@ -234,9 +234,9 @@ const processaErro = (palavra) => {
 }
 
 const atualizaListaChutes = (palavra) =>{   
-   arrayChutes.push(" " + palavra);
+   arrayChutes.push(palavra);
    arrayChutes.sort((a,b) => a - b);
-   listaChutesCampo.innerText =`${[...arrayChutes]}`;
+   listaChutesCampo.innerText =`${arrayChutes.map((chute, i) => i>0 ? " " + chute : chute)}`;
 }
 
 const comparaChute = (chute) => {
