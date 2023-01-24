@@ -607,8 +607,9 @@ video {
   padding: 1rem;
 }
 
-.pt-4 {
+.py-4 {
   padding-top: 1rem;
+  padding-bottom: 1rem;
 }
 
 .text-center {
@@ -651,4 +652,9 @@ video {
 .font-small{
   font-size: var(--fs-small);
   line-height: 1.4;
+}
+
+.container-lista-chutes:has(:not(span:empty))::before{
+  content: 'Chutes: ';
+  color: white;
 }

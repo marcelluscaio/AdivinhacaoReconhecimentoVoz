@@ -5,6 +5,7 @@ const numFinal = document.querySelector("#maior-numero");
 let numFinalInteiro;
 const qtdChances = document.querySelector("#chances");
 const campoChute = document.querySelector('#chute');
+const listaChutesCampo = document.querySelector('#lista-chutes')
 let qtdChancesValor;
 let numeroSorteado;
 let etapaJogo = 'inicio';
@@ -228,72 +229,31 @@ const processaErro = (palavra) => {
    qtdChancesValor--;
    qtdChances.innerText = qtdChancesValor;
    ultimaTentativa = palavra;
-   arrayChutes.push(palavra);
+   atualizaListaChutes(palavra);
    qtdChancesValor > 0 ? daDica(palavra) : perdeJogo();
+}
+
+const atualizaListaChutes = (palavra) =>{   
+   arrayChutes.push(" " + palavra);
+   arrayChutes.sort((a,b) => a - b);
+   listaChutesCampo.innerText =`${[...arrayChutes]}`;
+}
+
+const comparaChute = (chute) => {
+   const escala = numFinalInteiro-numInicialInteiro;
 }
 
 const daDica = (palavra) => {
    console.log(palavra)
 }
 
-const comparaChute = (chute) => {
-
-}
-
 
 
 /*
-
-function validaNumeros(){
-   let numInicialValor = numInicial.value;
-   let numFinalValor = numFinal.value;
-   let qtdChancesValor = qtdChances.value;
-   let mensagemErro = document.querySelector("#mensagemErro");   
-   if(numInicialValor == "" || numFinalValor == "" || qtdChancesValor == ""){
-      mensagemErro.classList.remove("escondido");
-      mensagemErro.innerHTML = "Preencha todos os campos";
-      erro=true;
-   } else if(Number.isInteger(parseFloat(numInicialValor)) == false || Number.isInteger(parseFloat(numFinalValor)) == false || Number.isInteger(parseFloat(qtdChancesValor)) == false){
-      mensagemErro.classList.remove("escondido");
-      mensagemErro.innerHTML = "Somente números inteiros";
-      erro=true;
-   } else if(parseInt(numFinalValor)<parseInt(numInicialValor)){
-      mensagemErro.classList.remove("escondido");
-      mensagemErro.innerHTML = "O número final deve ser maior que o número inicial";
-      erro=true;
-   } else if(parseInt(numFinalValor)-parseInt(numInicialValor)<=parseInt(qtdChancesValor)*3){
-      mensagemErro.classList.remove("escondido");
-      mensagemErro.innerHTML = "Assim fica fácil, fera! O número final deve ser maior que a soma do número inicial com o triplo da quantidade de chances";
-      erro=true;
-   }   
-}
-
-
-let tentativas ="";
-let arrChute = [];
-
-
-
-
 function comparaChute(){
-   let chuteValor = parseInt(chute.value);
-   chute.value = "";
-   let mensagemResultado = document.querySelector("#mensagemResultado");
-   let numInicialInteiro = parseInt(numInicial.value);
-   let numFinalInteiro = parseInt(numFinal.value);
-   let escala = numFinalInteiro-numInicialInteiro;
-   if(chuteValor === numeroSorteado){
-      mensagemResultado.classList.remove("escondido");
-      mensagemResultado.innerHTML = `Parabéns, você acertou! O número é ${numeroSorteado}! Clique no Reiniciar para jogar de novo!`;
-      botaoChute.disabled=true;
-      chute.disabled=true;
 
-   } else{
-      qtdChancesValor--;
-      let listaChute = document.querySelector("#listaChutes");
-      listaChute.classList.remove("escondido");      
-      arrChute.push(parseInt(chuteValor));
-      listaChute.innerHTML ="";
+      
+      
       for(i=0;i<arrChute.length;i++){
          if(i===arrChute.length-1){
             listaChute.innerHTML += `${arrChute[i]}`;
@@ -338,38 +298,33 @@ function comparaChute(){
          tentativas = chuteValor;
       }
    }   
-}        
+}
 
-function reiniciar(e){
-   e.preventDefault();
-   numInicial.disabled = false;
-   numFinal.disabled = false;
-   qtdChances.disabled = false;
-   botaoRegras.disabled = false;
-   numInicial.value="";
-   numFinal.value="";
-   qtdChances.value="";   
-   let formularioJogo = document.querySelector(".formularioChute");
-   formularioJogo.classList.add("escondido");
-   chute.disabled=false;
-   botaoChute.disabled=false;
-   let mensagemResultado = document.querySelector("#mensagemResultado");
-   mensagemResultado.classList.add("escondido");
-   mensagemResultado.innerHTML = "";
-   chute.value ="";
-   tentativas ="";
-   arrChute=[];   
-   let mensagemErroDois = document.querySelector("#mensagemErroDois");
-   let mensagemErro = document.querySelector("#mensagemErro");
-   let listaChute = document.querySelector("#listaChutes");
-   listaChute.classList.add("escondido");      
-   listaChute.innerHTML ="";
-   mensagemErro.innerHTML="";
-   mensagemErroDois.innerHTML="";
-   mensagemErro.classList.add("escondido");
-   mensagemErroDois.classList.add("escondido");
-} */
+function validaNumeros(){
+   let numInicialValor = numInicial.value;
+   let numFinalValor = numFinal.value;
+   let qtdChancesValor = qtdChances.value;
+   let mensagemErro = document.querySelector("#mensagemErro");   
+   if(numInicialValor == "" || numFinalValor == "" || qtdChancesValor == ""){
+      mensagemErro.classList.remove("escondido");
+      mensagemErro.innerHTML = "Preencha todos os campos";
+      erro=true;
+   } else if(Number.isInteger(parseFloat(numInicialValor)) == false || Number.isInteger(parseFloat(numFinalValor)) == false || Number.isInteger(parseFloat(qtdChancesValor)) == false){
+      mensagemErro.classList.remove("escondido");
+      mensagemErro.innerHTML = "Somente números inteiros";
+      erro=true;
+   } else if(parseInt(numFinalValor)<parseInt(numInicialValor)){
+      mensagemErro.classList.remove("escondido");
+      mensagemErro.innerHTML = "O número final deve ser maior que o número inicial";
+      erro=true;
+   } else if(parseInt(numFinalValor)-parseInt(numInicialValor)<=parseInt(qtdChancesValor)*3){
+      mensagemErro.classList.remove("escondido");
+      mensagemErro.innerHTML = "Assim fica fácil, fera! O número final deve ser maior que a soma do número inicial com o triplo da quantidade de chances";
+      erro=true;
+   }   
+}
 
+*/
 
 
 

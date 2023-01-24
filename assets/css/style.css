@@ -22,3 +22,8 @@
    font-size: var(--fs-small);
    line-height: 1.4;
 }
+
+.container-lista-chutes:has(:not(span:empty))::before{
+   content: 'Chutes: ';
+   color: white;
+}
