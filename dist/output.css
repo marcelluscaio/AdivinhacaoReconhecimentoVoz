@@ -538,6 +538,10 @@ video {
   min-height: 100vh;
 }
 
+.min-h-full {
+  min-height: 100%;
+}
+
 .w-3\/4 {
   width: 75%;
 }
@@ -666,7 +670,6 @@ video {
 .lds-dual-ring {
   display: none;
   width: 100%;
-  height: 100%;
   background-color: rgba(0,0,0,0.25);
   position: absolute;
 }
