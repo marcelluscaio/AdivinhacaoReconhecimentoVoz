@@ -2,18 +2,9 @@
 
 Jogo de adivinhação a partir de comando de voz com regras definidas pelo usuário.
 
-## Objetivo
-
-O objetivo deste projeto foi criar um jogo utilizando o WebSpeech API, e aprofundar meus conhecimentos em Tailwind.
-
-## Acesse
-
-<a href="https://adivinhacao-voz-caio.vercel.app/">Jogue clicando aqui</a>.
-
 ## Construído com:
 
 ![JavaScript](https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E) ![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white) ![css3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)  ![html5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
-
 
 ## Funcionalidades
 
@@ -37,6 +28,14 @@ Em telas de celular, a leitura de vh é prejudicada pelos controles do navegador
 
 A lista de chutes é gerada a partir de um array de chutes. Esse array é ordenado a cada inserção, e a renderização acontece utilizando a função map, que condiciona um espaçamento antes do número a depender se ele é o primeiro do array ou não (linha 242);
 
+## Acesse
+
+<a href="https://adivinhacao-voz-caio.vercel.app/">Jogue clicando aqui</a>.
+
+## Objetivo
+
+O objetivo deste projeto foi criar um jogo utilizando o WebSpeech API, e aprofundar meus conhecimentos em Tailwind. O gatilho para este projeto foi o curso "JavaScript: validações e reconhecimento de voz" da Alura, ministrado pelo Guilherme Lima. O desenvolvimento do projeto, contudo, foi completamente independente do feito pelo instrutor, começando pelo uso do Tailwind, assim como toda a lógica de geração de dicas e validação de dados do usuário.
+
 ## Tarefas
 
 - [X] Impedir usuário de inserir palavras que não sejam números
@@ -54,7 +53,7 @@ A lista de chutes é gerada a partir de um array de chutes. Esse array é ordena
 
 ## Screenshots
 <p align="middle">
-<img src="assets/img/readme.jpg" width="100%" height="100%">
+<img src="assets/img/readme.jpg" width="50%" height="100%">
 <img src="assets/img/readmeDesktop.jpg" width="100%" height="100%">
 </p>
 
