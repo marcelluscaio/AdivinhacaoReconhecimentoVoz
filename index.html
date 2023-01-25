@@ -8,20 +8,22 @@
    <title>Adivinhe o número</title>
 </head>
 <body class="bg-gradient-to-br from-indigo-800 via-slate-700 to-red-900 flex flex-col justify-around min-h-screen py-2.5">
-   <h1 class="w-3/4 mx-auto text-white title text-center">Você consegue adivinhar o número?</h1>
-   <div class="mx-auto w-3/4 text-center">      
+   <div class="text-center">
+      <h1 class="w-3/4 mx-auto text-white title ">Você consegue adivinhar o número?</h1>
       <h2 class="font-normal text-white font-light mb-4">Siga com atenção as instruções abaixo. Se algo der errado a qualquer momento, diga "Reiniciar"</h2>
-      <p id="instrucao" class="text-white font-bold font-small">Você vai controlar tudo com a sua voz. Se o computador não entender seu número, coloque "zero" na frente, por exemplo "zero zero" ou "zero treze". Diga "Entendi" para continuar</p>
    </div>
    <div class="mx-auto w-3/4 text-center flex flex-col gap-2">
       <h2 class="text-white font-small">Chute um número entre <span id="menor-numero">?</span> e <span id="maior-numero">?</span></h2>
-      <div class="text-white font-small">Você tem <span id="chances">?</span> chances</div>
-      <div class="text-white font-small" id="dica"></div> 
+      
       <div id="chute-container" class="p-4 border border-white border-solid inline-block aspect-square min-w-[20%] w-min flex justify-center items-center mx-auto">
          <span id="chute" class="text-white title">??</span>
       </div>
-      <div class="container-lista-chutes text-white font-small"><span id="lista-chutes"></span></div>   
-      
+      <div class="text-white font-small">Você tem <span id="chances">?</span> chances</div>
+      <div class="text-white font-small" id="dica"></div> 
+      <div class="container-lista-chutes text-white font-small"><span id="lista-chutes"></span></div>
+   </div>
+   <div class="mx-auto w-3/4 text-center">
+      <p id="instrucao" class="text-white font-bold font-small">Você vai controlar tudo com a sua voz. Se o computador não entender seu número, coloque "zero" na frente, por exemplo "zero zero" ou "zero treze". Diga "Entendi" para continuar</p>
    </div>
 
    <script src="assets/js/main.js"></script>

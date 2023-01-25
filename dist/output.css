@@ -607,9 +607,14 @@ video {
   padding: 1rem;
 }
 
-.py-4 {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
+.py-2\.5 {
+  padding-top: 0.625rem;
+  padding-bottom: 0.625rem;
+}
+
+.py-2 {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
 }
 
 .text-center {
@@ -655,5 +660,5 @@ video {
 }
 
 .container-lista-chutes:has(:not(span:empty))::before{
-  content: 'Chutes: ';
+  content: 'Seus chutes: ';
 }
