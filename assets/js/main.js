@@ -15,6 +15,14 @@ let ultimaTentativa = "";
 let penultimaTentativa = "";
 let arrayChutes = [];
 
+//fix problem with cellphone height
+let vh = window.innerHeight * 0.01;
+document.documentElement.style.setProperty('--vh', `${vh}px`);
+window.addEventListener('resize', () => {
+  let vh = window.innerHeight * 0.01;
+  document.documentElement.style.setProperty('--vh', `${vh}px`);
+});
+
 //Speech recognition
 window.SpeechRecognition = window.SpeechRecognition || webkitSpeechRecognition;
 const recognition = new SpeechRecognition();
