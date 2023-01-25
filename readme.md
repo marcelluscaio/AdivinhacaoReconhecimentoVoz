@@ -34,7 +34,7 @@ A lista de chutes é gerada a partir de um array de chutes. Esse array é ordena
 
 ## Objetivo
 
-O objetivo deste projeto foi criar um jogo utilizando o WebSpeech API, e aprofundar meus conhecimentos em Tailwind. O gatilho para este projeto foi o curso "JavaScript: validações e reconhecimento de voz" da Alura, ministrado pelo Guilherme Lima. O desenvolvimento do projeto, contudo, foi completamente independente do feito pelo instrutor, começando pelo uso do Tailwind, assim como toda a lógica de geração de dicas e validação de dados do usuário.
+O objetivo deste projeto foi criar um jogo utilizando o WebSpeech API, e aprofundar meus conhecimentos em Tailwind. O pontapé inicial para este projeto foi o curso "JavaScript: validações e reconhecimento de voz" da Alura, ministrado pelo Guilherme Lima. O desenvolvimento do projeto, contudo, foi independente do feito pelo instrutor, a começar pelo uso do Tailwind, assim como a lógica de geração de dicas e validação de dados do usuário.
 
 ## Tarefas
 
