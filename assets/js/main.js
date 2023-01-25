@@ -24,7 +24,7 @@ const reiniciaJogo = () => {
    instrucao.innerText = 'Você vai controlar tudo com a sua voz. Se o computador não entender seu número, coloque "zero" na frente, por exemplo "zero zero" ou "zero treze". Diga "Entendi" para continuar';
    [numInicial, numFinal, qtdChances, campoChute].forEach(elemento => elemento.innerText = '?');
    [numInicialInteiro, numFinalInteiro, ultimaTentativa, penultimaTentativa].forEach(elemento => elemento = undefined);
-   dica.innerText = '';
+   [dica, listaChutesCampo].forEach(elemento => elemento.innerText = '');
    arrayChutes = [];
 }
 /* 
