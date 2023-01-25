@@ -64,16 +64,23 @@ Neste projeto, reutilizei partes de código criado por mim em agosto de 2022, um
 ### Exemplo 1
 Esse trecho de código:
 
+```
 numInicial.innerText = '?';
 numFinal.innerText = '?';
 qtdChances.innerText = '?';
 campoChute.innerText = '?';
+```
+
+
 
 Virou:
+```
 [numInicial, numFinal, qtdChances, campoChute].forEach(elemento => elemento.innerText = '?')
+```
 
 ### Exemplo 2
 Esse trecho de código:
+```
    if(result ==='reiniciar'){
      etapaJogo = 'inicio';
       instrucao.innerText = 'Você vai controlar tudo com a sua voz. Siga com cuidado as instruções. Se algo der errado diga "Reiniciar". Diga "Entendi" para ir para continuar';
@@ -97,8 +104,10 @@ Esse trecho de código:
    }   else if(etapaJogo === 'confirmar' && result==="agora"){
       console.log('Começar jogo')
    } 
+```
 
 Foi reestruturado com o paradigma de orientação a objetos:
+```
 function engrenagemJogo(etapaAtual, palavra){
    if(palavra === "reiniciar"){
       reiniciaJogo();
@@ -175,3 +184,4 @@ const etapasJogo = [
    proximaEtapa: 'fim'
    }
 ];
+```
