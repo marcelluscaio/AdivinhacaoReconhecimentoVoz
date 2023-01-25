@@ -8,6 +8,14 @@
    --fs-title: clamp(1.56rem, calc(1.29rem + 1.33vw), 3.42rem);
 }
 
+html {
+  height: -webkit-fill-available;
+}
+
+body {
+  min-height: -webkit-fill-available;
+}
+
 .title{
    font-size: var(--fs-title);
    line-height: 1.2;
