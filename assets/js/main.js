@@ -1,3 +1,4 @@
+const loader = document.querySelector("#loader");
 const instrucao = document.querySelector("#instrucao");
 const dica = document.querySelector("#dica");
 const numInicial = document.querySelector("#menor-numero");
@@ -37,8 +38,12 @@ const reiniciaJogo = () => {
 
 recognition.start();
 recognition.onresult = (e) => {
-  const result = e.results[0][0].transcript;
-  engrenagemJogo(etapaJogo, result);
+   loader.display.style = 'block';
+   setTimeout(() => {
+      const result = e.results[0][0].transcript;
+      engrenagemJogo(etapaJogo, result);
+      loader.style.display = 'none';
+   }, 1000);
 }
 /* 
    COMPARAR CÓDIGO
