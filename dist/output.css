@@ -642,8 +642,7 @@ video {
   --fs-small: clamp(0.88rem, calc(0.66rem + 1.07vw), 2.38rem);
   --fs-normal: clamp(1.17rem, calc(0.93rem + 1.20vw), 2.85rem);
   --fs-title: clamp(1.56rem, calc(1.29rem + 1.33vw), 3.42rem);
-  --vh: 100px 
-
+  --vh: 1vh;
 }
 
 .body-height{

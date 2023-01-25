@@ -36,20 +36,13 @@ const reiniciaJogo = () => {
    [dica, listaChutesCampo].forEach(elemento => elemento.innerText = '');
    arrayChutes = [];
 }
-/* 
-   COMPARAR CÓDIGO   
-   numInicial.innerText = '?';
-   numFinal.innerText = '?';
-   qtdChances.innerText = '?';
-   campoChute.innerText = '?';
-*/
 
 recognition.start();
 recognition.onresult = (e) => {
    loader.style.display = 'block';
-   processaResposta(e);
-   
+   processaResposta(e);   
 }
+
 const processaResposta = resposta => {
    setTimeout(() => {
       const result = resposta.results[0][0].transcript;
@@ -57,33 +50,6 @@ const processaResposta = resposta => {
       loader.style.display = 'none';
    }, 1000);
 }
-
-/* 
-   COMPARAR CÓDIGO
-   if(result ==='reiniciar'){
-     etapaJogo = 'inicio';
-      instrucao.innerText = 'Você vai controlar tudo com a sua voz. Siga com cuidado as instruções. Se algo der errado diga "Reiniciar". Diga "Entendi" para ir para continuar';
-      numInicial.innerText = '?';
-      numFinal.innerText = '?';
-   } */ /* else if(etapaJogo === 'inicio' && result ==='entendi'){
-      etapaJogo = 'menorNumero';
-      instrucao.innerText = 'Diga o primeiro número do seu intervalo de adivinhação. Para 0 diga "zero zero" e para 1 dia "zero um"';
-   } */ /* else if(etapaJogo === 'menorNumero' && isNumber(result)){
-      numInicial.innerText = corrigeNumeros(result);
-      etapaJogo = 'maiorNumero';
-      instrucao.innerText = 'Diga o segundo número do seu intervalo de adivinhação';
-   } */ /* else if(etapaJogo === 'maiorNumero' && isNumber(result)){
-      numFinal.innerText = corrigeNumeros(result);
-      etapaJogo = 'chances';
-      instrucao.innerText = 'Quantas chances para adivinhar você quer?';
-   } *//*  else if(etapaJogo === 'chances' && isNumber(result)){
-      qtdChancesValor = corrigeNumeros(result);
-      etapaJogo = 'confirmar';
-      instrucao.innerText = 'Podemos começar o jogo? Diga "agora" para começar';
-   } */ /* else if(etapaJogo === 'confirmar' && result==="agora"){
-      console.log('Começar jogo')
-   } 
-*/
 
 recognition.onend = () => {
    recognition.start()
@@ -200,8 +166,7 @@ const validaNumeroMaior = (value) => {
    if(corrigeNumeros(value) < numInicialInteiro){
       instrucao.innerText = 'Número final deve ser maior que número inicial';
       return false
-   }
-      
+   }      
    return true;
 }
 
@@ -296,7 +261,7 @@ const daDica = (chute) => {
    let filtroTentativas = dicas.filter(e => e.tentativas === arrayChutes.length > 1);
    let filtroTemperatura = filtroTentativas.filter(e => e.temperatura === temperatura);
    let filtroComparaAnterior = filtroTemperatura.filter(e => e.comparacaoAnterior === comparacaoAnterior);
-   let filtroComparaAlvo = filtroComparaAnterior.filter(e => e.comparacaoAlvo === comparacaoAlvo || e.comparacaoAlvo === "");
+   let filtroComparaAlvo = filtroComparaAnterior.filter(e => e.comparacaoAlvo === comparacaoAlvo);
    let mensagemDica = filtroComparaAlvo[0].mensagem;
     dica.innerText = mensagemDica;
 }
@@ -373,29 +338,3 @@ const dicas = [
       mensagem:'Você ainda está perto, mas está mais distante do seu alvo. Vá na outra direção!'
    }
 ];
-
-//Regras do jogo
-//if(parseInt(numFinalValor)-parseInt(numInicialValor)<=parseInt(qtdChancesValor)*3 
-//Assim fica fácil, fera! O número final deve ser maior que a soma do número inicial com o triplo da quantidade de chances
-
-
-
-//Oxford
-//https://developer.oxforddictionaries.com/documentation/making-requests-to-the-api
-//https://developer.oxforddictionaries.com/documentation
-/* const id = 	'ef4dc1b4';
-const key = '9dd942bb0687f9ca2b975fa4dfe5ba81';
-const url = `https://od-api.oxforddictionaries.com/api/v2/entries/PT/example`;
-
-(function(){
-   fetch(url, headers = {"app_id": id, "app_key": key})
-   .then(result => console.log(result))
-})() */
-
-
-//https://api.dicionario-aberto.net/index.html
-/* (function(){
-   fetch('https://api.dicionario-aberto.net/random')
-   .then(result => result.json())
-   .then(result => console.log(result.word))
-})() */
