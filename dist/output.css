@@ -534,10 +534,6 @@ video {
   aspect-ratio: 1 / 1;
 }
 
-.min-h-screen {
-  min-height: 100vh;
-}
-
 .min-h-full {
   min-height: 100%;
 }
@@ -650,7 +646,7 @@ video {
 
 }
 
-body{
+.body-height{
   min-height: calc(100 * var(--vh));
 }
 

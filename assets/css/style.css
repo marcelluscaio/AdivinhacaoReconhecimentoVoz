@@ -10,7 +10,7 @@
    --vh: 100px 
 }
 
-body{
+.body-height{
   min-height: calc(100 * var(--vh));
 }
 
