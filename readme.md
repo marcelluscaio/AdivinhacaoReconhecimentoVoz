@@ -2,6 +2,10 @@
 
 Jogo de adivinhação a partir de comando de voz com regras definidas pelo usuário.
 
+## Acesse
+
+<a href="https://adivinhacao-voz-caio.vercel.app/">Jogue clicando aqui</a>
+
 ## Construído com:
 
 ![JavaScript](https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E) ![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white) ![css3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)  ![html5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
@@ -27,10 +31,6 @@ A API apresentava um problema de retornar números como strings por extenso. Con
 Em telas de celular, a leitura de vh é prejudicada pelos controles do navegador, gerando scroll vertical mesmo quando a aplicação é projetada para não ter rolagem. Resolvi esse problema definindo uma variável CSS a partir do JS (linha 18);
 
 A lista de chutes é gerada a partir de um array de chutes. Esse array é ordenado a cada inserção, e a renderização acontece utilizando a função map, que condiciona um espaçamento antes do número a depender se ele é o primeiro do array ou não (linha 242);
-
-## Acesse
-
-<a href="https://adivinhacao-voz-caio.vercel.app/">Jogue clicando aqui</a>.
 
 ## Objetivo
 
