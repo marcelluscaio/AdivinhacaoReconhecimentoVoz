@@ -38,13 +38,18 @@ const reiniciaJogo = () => {
 
 recognition.start();
 recognition.onresult = (e) => {
-   loader.display.style = 'block';
+   loader.style.display = 'block';
+   processaResposta(e);
+   
+}
+const processaResposta = resposta => {
    setTimeout(() => {
-      const result = e.results[0][0].transcript;
+      const result = resposta.results[0][0].transcript;
       engrenagemJogo(etapaJogo, result);
       loader.style.display = 'none';
    }, 1000);
 }
+
 /* 
    COMPARAR CÓDIGO
    if(result ==='reiniciar'){

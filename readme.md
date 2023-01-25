@@ -15,6 +15,7 @@ Pontos de atenção:
 Abstração das regras (melhoris no código)
 Seletor CSS: .container-lista-chutes:has(:not(span:empty))::before
 Dicas baseadas em 10 cenários diferentes
+Contornei problema da API
 
 
 Fazer dois projetos:
