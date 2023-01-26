@@ -59,7 +59,7 @@ O objetivo deste projeto foi criar um jogo utilizando o WebSpeech API, e aprofun
 
 ## Exemplos de melhorias realizadas no código
 
-Neste projeto, reutilizei partes de código criado por mim em agosto de 2022, um jogo de adivinhação a parti de dados digitados pelo usuário. Refatorei ele inteiro, e alguns pontos podem interessar a outros desenvolvedores. 
+Neste projeto, reutilizei partes de código criado por mim em agosto de 2022, um jogo de adivinhação a partir de dados digitados pelo usuário. Refatorei ele inteiro, e alguns pontos podem interessar a outros desenvolvedores. 
 
 ### Exemplo 1
 Esse trecho de código:
