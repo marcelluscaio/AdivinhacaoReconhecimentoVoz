@@ -1,6 +1,6 @@
 # Fala que eu te escuto
 
-Jogo de adivinhação a partir de comando de voz com regras definidas pelo usuário.
+Jogo de adivinhação de números a partir de comando de voz com regras definidas pelo usuário.
 
 ## Acesse
 
@@ -28,7 +28,7 @@ Criação de objeto 'dicas' com 4 parâmetros, possibilitando 10 cenários disti
 
 A API apresentava um problema de retornar números como strings por extenso. Contornei esse problema utilizando um objeto 'numeros' que é varrido pela função 'corrigeNumeros';
 
-Em telas de celular, a leitura de vh é prejudicada pelos controles do navegador, gerando scroll vertical mesmo quando a aplicação é projetada para não ter rolagem. Resolvi esse problema definindo uma variável CSS a partir do JS (linha 18);
+Em telas de celular, a leitura de vh é prejudicada pelos controles do navegador, gerando scroll vertical mesmo quando a aplicação é projetada para não ter rolagem. Resolvi esse problema definindo uma variável CSS a partir do JavaScript (linha 18);
 
 A lista de chutes é gerada a partir de um array de chutes. Esse array é ordenado a cada inserção, e a renderização acontece utilizando a função map, que condiciona um espaçamento antes do número a depender se ele é o primeiro do array ou não (linha 242);
 
