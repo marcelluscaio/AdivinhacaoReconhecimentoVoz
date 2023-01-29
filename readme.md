@@ -106,7 +106,7 @@ Esse trecho de código:
    } 
 ```
 
-Foi reestruturado com o paradigma de orientação a objetos:
+Foi reestruturado abstriando as regras para um objeto, que é percorrido por uma função:
 ```
 function engrenagemJogo(etapaAtual, palavra){
    if(palavra === "reiniciar"){
