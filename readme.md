@@ -64,7 +64,7 @@ Neste projeto, reutilizei partes de código criado por mim em agosto de 2022, um
 ### Exemplo 1
 Esse trecho de código:
 
-```
+```js
 numInicial.innerText = '?';
 numFinal.innerText = '?';
 qtdChances.innerText = '?';
@@ -74,13 +74,13 @@ campoChute.innerText = '?';
 
 
 Virou:
-```
+```js
 [numInicial, numFinal, qtdChances, campoChute].forEach(elemento => elemento.innerText = '?')
 ```
 
 ### Exemplo 2
 Esse trecho de código:
-```
+```js
    if(result ==='reiniciar'){
      etapaJogo = 'inicio';
       instrucao.innerText = 'Você vai controlar tudo com a sua voz. Siga com cuidado as instruções. Se algo der errado diga "Reiniciar". Diga "Entendi" para ir para continuar';
@@ -107,7 +107,7 @@ Esse trecho de código:
 ```
 
 Foi reestruturado abstriando as regras para um objeto, que é percorrido por uma função:
-```
+```js
 function engrenagemJogo(etapaAtual, palavra){
    if(palavra === "reiniciar"){
       reiniciaJogo();
